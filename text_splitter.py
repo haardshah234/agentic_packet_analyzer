@@ -1,6 +1,10 @@
-from langchain_text_splitters import RecursiveCharacterTextSplitter, Language
+from langchain_core.documents import Document
 import time
 from structured_docx_loader import DocxLoader
+from dotenv import load_dotenv
+load_dotenv()
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
 
 def time_log(base_fn:function):
     def timed_fn(*args):
@@ -14,13 +18,12 @@ def time_log(base_fn:function):
 
 @time_log
 def chunk_docx(file_path):
-    loader = DocxLoader(file_path, mode="sections", table_format="html")
+    loader:DocxLoader = DocxLoader(file_path, mode="sections", table_format="html")
     return loader.load()
 
 chunks = chunk_docx("sample.docx")
 
-def print_third_headings(chunks: list) -> None:
+def print_third_headings(chunks: list[Document]) -> None:
     for chunk in chunks:
         if chunk.metadata["heading_level"] == 3:
             print(chunk.page_content)
-
