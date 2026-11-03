@@ -1,0 +1,42 @@
+{
+    "packets": [
+        {
+            "name": "SamplePacket",
+            "reference_section": "3.1-3.5",
+            "total_size_in_bytes": 34,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "size_in_bytes": 6,
+                    "is_variable_length": false,
+                    "fixed_value": "SAMPLE"
+                },
+                {
+                    "field_name": "Name",
+                    "size_in_bytes": 20,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Age",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "RollNumber",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Footer",
+                    "size_in_bytes": 6,
+                    "is_variable_length": false,
+                    "fixed_value": "FOOTER"
+                }
+            ],
+            "assumptions": []
+        }
+    ]
+}
