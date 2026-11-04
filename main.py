@@ -18,7 +18,7 @@ def main():
     filepath = fetch_irs()
 
     chunks = chunk_docx(filepath)
-    
+
     jsonify_doc(chunks)
 
     #   Extracting the packets in structured format

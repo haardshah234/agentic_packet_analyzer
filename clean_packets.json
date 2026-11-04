@@ -1,0 +1,71 @@
+[
+     {
+          "frame.time": "Nov  4, 2026 17:06:54.630099000 India Standard Time",
+          "frame.number": "36",
+          "ip.src": "127.0.0.1",
+          "ip.dst": "127.0.0.1",
+          "tcp.srcport": "64145",
+          "tcp.dstport": "5001",
+          "tcp.len": "2",
+          "tcp.flags_tree": {
+               "tcp.flags.res": "0",
+               "tcp.flags.ns": "0",
+               "tcp.flags.cwr": "0",
+               "tcp.flags.ecn": "0",
+               "tcp.flags.urg": "0",
+               "tcp.flags.ack": "1",
+               "tcp.flags.push": "1",
+               "tcp.flags.reset": "0",
+               "tcp.flags.syn": "0",
+               "tcp.flags.fin": "0",
+               "tcp.flags.str": "\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7AP\u00b7\u00b7\u00b7"
+          },
+          "tcp.payload": "48:69"
+     },
+     {
+          "frame.time": "Nov  4, 2026 17:08:38.102056000 India Standard Time",
+          "frame.number": "198",
+          "ip.src": "127.0.0.1",
+          "ip.dst": "127.0.0.1",
+          "tcp.srcport": "64145",
+          "tcp.dstport": "5001",
+          "tcp.len": "6",
+          "tcp.flags_tree": {
+               "tcp.flags.res": "0",
+               "tcp.flags.ns": "0",
+               "tcp.flags.cwr": "0",
+               "tcp.flags.ecn": "0",
+               "tcp.flags.urg": "0",
+               "tcp.flags.ack": "1",
+               "tcp.flags.push": "1",
+               "tcp.flags.reset": "0",
+               "tcp.flags.syn": "0",
+               "tcp.flags.fin": "0",
+               "tcp.flags.str": "\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7AP\u00b7\u00b7\u00b7"
+          },
+          "tcp.payload": "48:45:41:44:45:52"
+     },
+     {
+          "frame.time": "Nov  4, 2026 17:09:37.077904000 India Standard Time",
+          "frame.number": "296",
+          "ip.src": "127.0.0.1",
+          "ip.dst": "127.0.0.1",
+          "tcp.srcport": "64145",
+          "tcp.dstport": "5001",
+          "tcp.len": "34",
+          "tcp.flags_tree": {
+               "tcp.flags.res": "0",
+               "tcp.flags.ns": "0",
+               "tcp.flags.cwr": "0",
+               "tcp.flags.ecn": "0",
+               "tcp.flags.urg": "0",
+               "tcp.flags.ack": "1",
+               "tcp.flags.push": "1",
+               "tcp.flags.reset": "0",
+               "tcp.flags.syn": "0",
+               "tcp.flags.fin": "0",
+               "tcp.flags.str": "\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7AP\u00b7\u00b7\u00b7"
+          },
+          "tcp.payload": "48:45:41:44:45:52:48:61:61:72:64:20:53:68:61:68:48:61:61:72:64:20:53:68:61:68:41:41:46:4f:4f:54:45:52"
+     }
+]

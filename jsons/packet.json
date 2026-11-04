@@ -1,8 +1,8 @@
 {
     "packets": [
         {
-            "name": "SamplePacket",
-            "reference_section": "3.1-3.5",
+            "name": "Sample Packet",
+            "reference_section": "3.1 Sample Packet",
             "total_size_in_bytes": 34,
             "fields": [
                 {
@@ -24,7 +24,7 @@
                     "fixed_value": null
                 },
                 {
-                    "field_name": "RollNumber",
+                    "field_name": "Roll Number",
                     "size_in_bytes": 1,
                     "is_variable_length": false,
                     "fixed_value": null
@@ -33,10 +33,142 @@
                     "field_name": "Footer",
                     "size_in_bytes": 6,
                     "is_variable_length": false,
-                    "fixed_value": "FOOTER"
+                    "fixed_value": "END123"
                 }
             ],
             "assumptions": []
+        },
+        {
+            "name": "Status Flags Packet",
+            "reference_section": "3.2 Status Flags Packet",
+            "total_size_in_bytes": 8,
+            "fields": [
+                {
+                    "field_name": "Control",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Status",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Counter",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Event ID",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Conditional Metadata Packet",
+            "reference_section": "3.3 Conditional Metadata Packet",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Flags",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Metadata",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Payload Length",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Payload",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Sequence Number",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": [
+                "Metadata field (4 bytes) is present only when Flags bit 0 (Include Metadata) is set to 1.",
+                "Payload length is given by the Payload Length field; Payload follows immediately after it.",
+                "Sequence Number (2 bytes) follows the Payload."
+            ]
+        },
+        {
+            "name": "Text Command Packet",
+            "reference_section": "3.4 Text Command Packet",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Text Length",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Command Text",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Parameter",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Checksum",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": [
+                "Command Text length is given by the Text Length field (2-byte big-endian).",
+                "Checksum is calculated over all preceding bytes (Text Length, Command Text, Parameter)."
+            ]
+        },
+        {
+            "name": "Sensor Batch Packet",
+            "reference_section": "3.5 Sensor Batch Packet",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Record Count",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Sensor Records",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": [
+                "Sensor Records field consists of Record Count repetitions of a 5-byte record (Sensor ID 2 bytes, Reading 2 bytes, Quality 1 byte).",
+                "Record Count may be zero, resulting in a packet containing only the Record Count byte."
+            ]
         }
     ]
 }
