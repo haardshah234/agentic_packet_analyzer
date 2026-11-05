@@ -15,5 +15,5 @@ def jsonify_doc(chunks: list[Document]):
         mydict[f"chunk_{chunk_no}"]["metadata"] = chunk.metadata
         mydict[f"chunk_{chunk_no}"]["page_content"] = chunk.page_content
         chunk_no += 1
-    with open(project_root/"jsons/chunks.json","w") as file:
+    with open(project_root/"jsons/chunks.json","w",encoding="utf-8") as file:
         file.write(json.dumps(mydict, indent=4))

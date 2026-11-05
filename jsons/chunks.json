@@ -2,289 +2,334 @@
     "chunk_1": {
         "id": 1,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
             "heading": "1 Introduction",
             "heading_level": 1
         },
-        "page_content": "# 1 Introduction\n\nThis Interface Requirements Specification (IRS) defines five example packet formats used to exercise packet-definition extraction and validation. Each packet definition specifies its field layout, lengths, encoding, and validation requirements. Implementations shall follow the requirements stated for each packet type."
+        "page_content": "# 1 Introduction\n\nThis Interface Requirements Specification (IRS) defines five illustrative application-level packet formats exchanged between independent subsystems. Each packet definition identifies its sender, receiver, flow direction, field layout, encoding, and validation requirements. The examples are intentionally varied and are designed to exercise automated extraction and packet-pattern detection; they do not represent a production system."
     },
     "chunk_2": {
         "id": 2,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "1.1 Purpose",
+            "heading_level": 2
+        },
+        "page_content": "## 1.1 Purpose\n\nThis document provides packet definitions that can be extracted into a machine-readable representation and used to locate and validate packet occurrences within captured network traffic."
+    },
+    "chunk_3": {
+        "id": 3,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "1.2 Scope",
+            "heading_level": 2
+        },
+        "page_content": "## 1.2 Scope\n\nThis IRS specifies packet structures and interface-level validation. It does not prescribe routing, retransmission, or transport connection management."
+    },
+    "chunk_4": {
+        "id": 4,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
             "heading": "2 General Conventions",
             "heading_level": 1
         },
         "page_content": "# 2 General Conventions\n\n"
     },
-    "chunk_3": {
-        "id": 3,
-        "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "2.1 Byte and Bit Numbering",
-            "heading_level": 2
-        },
-        "page_content": "## 2.1 Byte and Bit Numbering\n\nByte offsets are zero-based and are measured from the first byte of the packet. Within a byte, bit 0 is the least significant bit (LSB) and bit 7 is the most significant bit (MSB), unless a packet-specific requirement states otherwise."
-    },
-    "chunk_4": {
-        "id": 4,
-        "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "2.2 Numeric and Text Encoding",
-            "heading_level": 2
-        },
-        "page_content": "## 2.2 Numeric and Text Encoding\n\nMulti-byte numeric fields use the byte order specified in the applicable packet definition. ASCII fields contain ASCII characters. UTF-8 fields contain valid UTF-8 encoded text. A field's declared byte length refers to its encoded byte length, not its character count."
-    },
     "chunk_5": {
         "id": 5,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "2.3 Field Ordering and Lengths",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "2.1 Subsystem and Flow Direction",
             "heading_level": 2
         },
-        "page_content": "## 2.3 Field Ordering and Lengths\n\nFields appear in the order listed in each packet's field-layout table. Fixed-size fields occupy the stated number of bytes. Variable-size fields derive their length from the associated length field, count field, or packet-specific rule."
+        "page_content": "## 2.1 Subsystem and Flow Direction\n\nEach packet definition identifies an originating subsystem (Sender) and destination subsystem (Receiver). Direction is written Sender \u2192 Receiver. The sender constructs the packet; the receiver validates and interprets it. A packet observed in the reverse direction shall not be treated as the same packet type unless explicitly specified."
     },
     "chunk_6": {
         "id": 6,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "2.4 Reserved Values and Validation",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "2.2 Byte Numbering and Alignment",
             "heading_level": 2
         },
-        "page_content": "## 2.4 Reserved Values and Validation\n\nReserved bits and fields shall be transmitted as zero unless otherwise stated. Receivers shall validate fixed values, enumerations, ranges, lengths, and checksums where specified. A packet that violates a mandatory validation requirement shall be rejected."
+        "page_content": "## 2.2 Byte Numbering and Alignment\n\nOffsets are zero-based from the first byte of the application-level packet. Fields are serialized in table order. Every field occupies a whole number of bytes. This IRS contains no bit-packed fields."
     },
     "chunk_7": {
         "id": 7,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "2.3 Boolean Representation",
+            "heading_level": 2
+        },
+        "page_content": "## 2.3 Boolean Representation\n\nEvery Boolean field occupies exactly one byte: 0x00 represents FALSE and 0x01 represents TRUE. All other values are invalid. A Boolean flag never occupies an individual bit."
+    },
+    "chunk_8": {
+        "id": 8,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "2.4 Numeric and Text Encoding",
+            "heading_level": 2
+        },
+        "page_content": "## 2.4 Numeric and Text Encoding\n\nInteger widths and byte order are specified per field. Unless stated otherwise, multi-byte integers are little-endian. ASCII and UTF-8 fields shall use their named encodings. Text lengths are measured in encoded bytes."
+    },
+    "chunk_9": {
+        "id": 9,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "2.5 Packet Boundaries",
+            "heading_level": 2
+        },
+        "page_content": "## 2.5 Packet Boundaries\n\nA packet may occur at the beginning, middle, or end of a larger transport payload. Packet boundaries are determined by the signature, length fields, count fields, or other framing rules in the relevant definition. One TCP payload is not assumed to equal one application packet."
+    },
+    "chunk_10": {
+        "id": 10,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "2.6 Reserved Values and Validation",
+            "heading_level": 2
+        },
+        "page_content": "## 2.6 Reserved Values and Validation\n\nReserved bytes shall be zero. Enumerations shall contain only listed values. Receivers shall reject invalid lengths, unsupported enumeration values, invalid Boolean encodings, and failed checksums where specified."
+    },
+    "chunk_11": {
+        "id": 11,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
             "heading": "3 Functional Requirements",
             "heading_level": 1
         },
         "page_content": "# 3 Functional Requirements\n\n"
     },
-    "chunk_8": {
-        "id": 8,
-        "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.1 Sample Packet",
-            "heading_level": 2
-        },
-        "page_content": "## 3.1 Sample Packet\n\n"
-    },
-    "chunk_9": {
-        "id": 9,
-        "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.1.1 Packet Overview",
-            "heading_level": 3
-        },
-        "page_content": "### 3.1.1 Packet Overview\n\nThe Sample Packet is a fixed-length packet of 34 bytes. It contains a six-byte header, a fixed-width name, two one-byte numeric fields, and a six-byte footer."
-    },
-    "chunk_10": {
-        "id": 10,
-        "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.1.2 Field Layout",
-            "heading_level": 3
-        },
-        "page_content": "### 3.1.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Must contain the exact value SAMPLE.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>20</td>\n    <td>ASCII</td>\n    <td>Name text followed by NULL (0x00) padding to exactly 20 bytes.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013120.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 1\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Must contain the exact value END123.</td>\n  </tr>\n</table>"
-    },
-    "chunk_11": {
-        "id": 11,
-        "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.1.3 Packet Length Validation",
-            "heading_level": 3
-        },
-        "page_content": "### 3.1.3 Packet Length Validation\n\nThe packet shall be exactly 34 bytes long. The Header shall occupy bytes 0\u20135, Name bytes 6\u201325, Age byte 26, Roll Number byte 27, and Footer bytes 28\u201333. The receiver shall reject packets with an incorrect total length, header, footer, or field value outside the stated range."
-    },
     "chunk_12": {
         "id": 12,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.2 Status Flags Packet",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.1 GUI Command Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.2 Status Flags Packet\n\n"
+        "page_content": "## 3.1 GUI Command Packet\n\n"
     },
     "chunk_13": {
         "id": 13,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.2.1 Packet Overview",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.1.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.2.1 Packet Overview\n\nThe Status Flags Packet is a fixed-length packet of 8 bytes. It carries control flags, a status enumeration, a counter, and an event identifier."
+        "page_content": "### 3.1.1 Packet Overview\n\nSender: GUI Subsystem. Receiver: ZYNQ Control Subsystem. Flow Direction: GUI Subsystem \u2192 ZYNQ Control Subsystem. This fixed-length packet carries a user-selected command and numeric argument."
     },
     "chunk_14": {
         "id": 14,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.2.2 Field Layout",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.1.2 Field Layout",
             "heading_level": 3
         },
-        "page_content": "### 3.2.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Control</td>\n    <td>1</td>\n    <td>Bit field</td>\n    <td>Bit 0: Enabled; bit 1: Alarm; bits 2\u20137: reserved and shall be zero.</td>\n  </tr>\n  <tr>\n    <td>Status</td>\n    <td>1</td>\n    <td>Unsigned 8-bit enumeration</td>\n    <td>0 = Idle; 1 = Active; 2 = Warning; 3 = Error. Other values are invalid.</td>\n  </tr>\n  <tr>\n    <td>Counter</td>\n    <td>2</td>\n    <td>Unsigned 16-bit integer, little-endian</td>\n    <td>Valid range: 0\u201365535.</td>\n  </tr>\n  <tr>\n    <td>Event ID</td>\n    <td>4</td>\n    <td>Unsigned 32-bit integer, little-endian</td>\n    <td>Valid range: 0\u20134294967295.</td>\n  </tr>\n</table>"
+        "page_content": "### 3.1.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Start Marker</td>\n    <td>4</td>\n    <td>ASCII</td>\n    <td>Exact value: GUI!.</td>\n  </tr>\n  <tr>\n    <td>Command ID</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>0 = STOP; 1 = START; 2 = RESET; 3 = SET_LEVEL.</td>\n  </tr>\n  <tr>\n    <td>Enable</td>\n    <td>1</td>\n    <td>Boolean</td>\n    <td>0x00 = FALSE; 0x01 = TRUE.</td>\n  </tr>\n  <tr>\n    <td>Command Argument</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Valid range: 0\u20131000.</td>\n  </tr>\n  <tr>\n    <td>Transaction ID</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Valid range: 0\u201365535.</td>\n  </tr>\n  <tr>\n    <td>End Marker</td>\n    <td>4</td>\n    <td>ASCII</td>\n    <td>Exact value: !END.</td>\n  </tr>\n</table>"
     },
     "chunk_15": {
         "id": 15,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.2.3 Bit and Value Validation",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.1.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.2.3 Bit and Value Validation\n\nThe packet shall be exactly 8 bytes. Reserved Control bits shall be zero. Status shall be one of the defined enumeration values. Counter and Event ID shall be decoded as little-endian unsigned integers."
+        "page_content": "### 3.1.3 Length and Validation\n\nThe packet shall be exactly 14 bytes. Start Marker occupies offsets 0\u20133 and End Marker offsets 10\u201313. Command ID shall be defined, Enable shall be 0x00 or 0x01, and Command Argument shall not exceed 1000."
     },
     "chunk_16": {
         "id": 16,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.3 Conditional Metadata Packet",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.2 Telemetry Snapshot Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.3 Conditional Metadata Packet\n\n"
+        "page_content": "## 3.2 Telemetry Snapshot Packet\n\n"
     },
     "chunk_17": {
         "id": 17,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.3.1 Packet Overview",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.2.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.3.1 Packet Overview\n\nThe Conditional Metadata Packet contains a control byte, optional metadata, a payload length, a variable-length payload, and a sequence number. The metadata field is present only when the Include Metadata flag is set."
+        "page_content": "### 3.2.1 Packet Overview\n\nSender: ZYNQ Control Subsystem. Receiver: Mission Dashboard Subsystem. Flow Direction: ZYNQ Control Subsystem \u2192 Mission Dashboard Subsystem. This fixed-length packet reports a sample counter, temperature, supply voltage, and sensor health."
     },
     "chunk_18": {
         "id": 18,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.3.2 Field Layout",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.2.2 Field Layout",
             "heading_level": 3
         },
-        "page_content": "### 3.3.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Flags</td>\n    <td>1</td>\n    <td>Bit field</td>\n    <td>Bit 0: Include Metadata (0 = absent, 1 = present); bits 1\u20137 reserved and zero.</td>\n  </tr>\n  <tr>\n    <td>Metadata</td>\n    <td>4</td>\n    <td>Unsigned 32-bit integer, little-endian</td>\n    <td>Present only when Include Metadata = 1.</td>\n  </tr>\n  <tr>\n    <td>Payload Length</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Number of bytes in Payload; valid range 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Payload</td>\n    <td>Payload Length</td>\n    <td>Byte array</td>\n    <td>May contain zero bytes; its length shall equal Payload Length.</td>\n  </tr>\n  <tr>\n    <td>Sequence Number</td>\n    <td>2</td>\n    <td>Unsigned 16-bit integer, little-endian</td>\n    <td>Present after Payload.</td>\n  </tr>\n</table>"
+        "page_content": "### 3.2.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Signature</td>\n    <td>4</td>\n    <td>ASCII</td>\n    <td>Exact value: TLM1.</td>\n  </tr>\n  <tr>\n    <td>Sample Counter</td>\n    <td>4</td>\n    <td>Unsigned 32-bit, little-endian</td>\n    <td>0\u20134294967295.</td>\n  </tr>\n  <tr>\n    <td>Temperature</td>\n    <td>2</td>\n    <td>Signed 16-bit, little-endian</td>\n    <td>Tenths of \u00b0C; range -400 to 1250.</td>\n  </tr>\n  <tr>\n    <td>Supply Voltage</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Millivolts; range 0\u201360000.</td>\n  </tr>\n  <tr>\n    <td>Sensor Healthy</td>\n    <td>1</td>\n    <td>Boolean</td>\n    <td>0x00 = FALSE; 0x01 = TRUE.</td>\n  </tr>\n  <tr>\n    <td>Operating Mode</td>\n    <td>1</td>\n    <td>Unsigned 8-bit enumeration</td>\n    <td>0 = OFFLINE; 1 = STANDBY; 2 = ACTIVE; 3 = MAINTENANCE.</td>\n  </tr>\n  <tr>\n    <td>Reserved</td>\n    <td>2</td>\n    <td>Byte array</td>\n    <td>Both bytes shall be 0x00.</td>\n  </tr>\n</table>"
     },
     "chunk_19": {
         "id": 19,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.3.3 Conditional Presence and Length Validation",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.2.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.3.3 Conditional Presence and Length Validation\n\nThe minimum packet length is 4 bytes when Metadata is absent and Payload Length is zero. When Metadata is present, the packet includes the additional 4-byte Metadata field. Total packet length shall equal 1 + (4 if Include Metadata = 1 else 0) + 1 + Payload Length + 2 bytes. The receiver shall reject reserved flag bits, truncated fields, or trailing bytes beyond the computed packet length."
+        "page_content": "### 3.2.3 Length and Validation\n\nThe packet shall be exactly 16 bytes. Signature shall equal TLM1. Numeric values shall be in range, Sensor Healthy shall be a valid Boolean, Operating Mode shall be defined, and Reserved bytes shall be zero."
     },
     "chunk_20": {
         "id": 20,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.4 Text Command Packet",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.3 Archive Transfer Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.4 Text Command Packet\n\n"
+        "page_content": "## 3.3 Archive Transfer Packet\n\n"
     },
     "chunk_21": {
         "id": 21,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.4.1 Packet Overview",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.3.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.4.1 Packet Overview\n\nThe Text Command Packet carries a length-prefixed UTF-8 command string, a signed numeric parameter, and a CRC-16/CCITT-FALSE checksum."
+        "page_content": "### 3.3.1 Packet Overview\n\nSender: Data Archive Subsystem. Receiver: Storage Gateway Subsystem. Flow Direction: Data Archive Subsystem \u2192 Storage Gateway Subsystem. This variable-length packet transfers a named archive object; its content may be empty."
     },
     "chunk_22": {
         "id": 22,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.4.2 Field Layout",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.3.2 Field Layout",
             "heading_level": 3
         },
-        "page_content": "### 3.4.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Text Length</td>\n    <td>2</td>\n    <td>Unsigned 16-bit integer, big-endian</td>\n    <td>Number of encoded bytes in Command Text.</td>\n  </tr>\n  <tr>\n    <td>Command Text</td>\n    <td>Text Length</td>\n    <td>UTF-8 byte sequence</td>\n    <td>Must be valid UTF-8. A zero-length command is permitted unless disallowed by the application.</td>\n  </tr>\n  <tr>\n    <td>Parameter</td>\n    <td>4</td>\n    <td>Signed 32-bit integer, little-endian</td>\n    <td>Valid range: -2147483648 to 2147483647.</td>\n  </tr>\n  <tr>\n    <td>Checksum</td>\n    <td>2</td>\n    <td>Unsigned 16-bit integer, big-endian</td>\n    <td>CRC-16/CCITT-FALSE over all preceding packet bytes; polynomial 0x1021, initial value 0xFFFF, no reflection, xor-out 0x0000.</td>\n  </tr>\n</table>"
+        "page_content": "### 3.3.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Signature</td>\n    <td>3</td>\n    <td>ASCII</td>\n    <td>Exact value: ARC.</td>\n  </tr>\n  <tr>\n    <td>Object Name Length</td>\n    <td>1</td>\n    <td>Unsigned 8-bit</td>\n    <td>Number of bytes in Object Name; 1\u201364.</td>\n  </tr>\n  <tr>\n    <td>Object Name</td>\n    <td>Object Name Length</td>\n    <td>UTF-8</td>\n    <td>Valid UTF-8; shall not contain a zero byte.</td>\n  </tr>\n  <tr>\n    <td>Content Length</td>\n    <td>4</td>\n    <td>Unsigned 32-bit, little-endian</td>\n    <td>Number of Content bytes; zero permitted.</td>\n  </tr>\n  <tr>\n    <td>Content</td>\n    <td>Content Length</td>\n    <td>Byte array</td>\n    <td>Opaque; any byte value permitted.</td>\n  </tr>\n  <tr>\n    <td>Transfer Complete</td>\n    <td>1</td>\n    <td>Boolean</td>\n    <td>0x00 = FALSE; 0x01 = TRUE.</td>\n  </tr>\n</table>"
     },
     "chunk_23": {
         "id": 23,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.4.3 Text, Range, and Checksum Validation",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.3.3 Variable-Length Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.4.3 Text, Range, and Checksum Validation\n\nThe packet shall contain exactly 2 + Text Length + 4 + 2 bytes. Text Length counts UTF-8 encoded bytes, not Unicode characters. The receiver shall reject invalid UTF-8, truncated or excess data, and a checksum that does not match the CRC-16/CCITT-FALSE calculation over the bytes preceding the Checksum field."
+        "page_content": "### 3.3.3 Variable-Length Validation\n\nTotal length shall equal 9 + Object Name Length + Content Length bytes. Object Name Length shall be 1\u201364. Content Length may be zero. Transfer Complete shall be 0x00 or 0x01. Truncated packets and trailing bytes shall be rejected."
     },
     "chunk_24": {
         "id": 24,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.5 Sensor Batch Packet",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.4 Navigation Intent Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.5 Sensor Batch Packet\n\n"
+        "page_content": "## 3.4 Navigation Intent Packet\n\n"
     },
     "chunk_25": {
         "id": 25,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.5.1 Packet Overview",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.4.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.5.1 Packet Overview\n\nThe Sensor Batch Packet contains a record count followed by zero or more fixed-size sensor records. Each record reports a sensor identifier, signed reading, and quality code."
+        "page_content": "### 3.4.1 Packet Overview\n\nSender: Route Planner Subsystem. Receiver: Autonomous Vehicle Subsystem. Flow Direction: Route Planner Subsystem \u2192 Autonomous Vehicle Subsystem. This fixed-length packet communicates a waypoint, coordinates, and movement preference."
     },
     "chunk_26": {
         "id": 26,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.5.2 Field Layout",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.4.2 Field Layout",
             "heading_level": 3
         },
-        "page_content": "### 3.5.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Record Count</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Number of Sensor Records; valid range 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Sensor Records</td>\n    <td>Record Count \u00d7 5</td>\n    <td>Repeated record structure</td>\n    <td>Exactly Record Count records follow.</td>\n  </tr>\n  <tr>\n    <td>Sensor ID (per record)</td>\n    <td>2</td>\n    <td>Unsigned 16-bit integer, little-endian</td>\n    <td>Valid range: 0\u201365535.</td>\n  </tr>\n  <tr>\n    <td>Reading (per record)</td>\n    <td>2</td>\n    <td>Signed 16-bit integer, little-endian</td>\n    <td>Valid range: -32768 to 32767.</td>\n  </tr>\n  <tr>\n    <td>Quality (per record)</td>\n    <td>1</td>\n    <td>Unsigned 8-bit enumeration</td>\n    <td>0 = Unknown; 1 = Good; 2 = Degraded; 3 = Fault. Other values are invalid.</td>\n  </tr>\n</table>"
+        "page_content": "### 3.4.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Signature</td>\n    <td>4</td>\n    <td>ASCII</td>\n    <td>Exact value: NAVI.</td>\n  </tr>\n  <tr>\n    <td>Waypoint ID</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, big-endian</td>\n    <td>1\u201365535.</td>\n  </tr>\n  <tr>\n    <td>Latitude</td>\n    <td>4</td>\n    <td>Signed 32-bit, big-endian</td>\n    <td>Degrees \u00d7 10^6; -90000000 to 90000000.</td>\n  </tr>\n  <tr>\n    <td>Longitude</td>\n    <td>4</td>\n    <td>Signed 32-bit, big-endian</td>\n    <td>Degrees \u00d7 10^6; -180000000 to 180000000.</td>\n  </tr>\n  <tr>\n    <td>Use Preferred Route</td>\n    <td>1</td>\n    <td>Boolean</td>\n    <td>0x00 = FALSE; 0x01 = TRUE.</td>\n  </tr>\n  <tr>\n    <td>Movement Profile</td>\n    <td>1</td>\n    <td>Unsigned 8-bit enumeration</td>\n    <td>0 = NORMAL; 1 = QUIET; 2 = FAST; 3 = CONSERVATIVE.</td>\n  </tr>\n  <tr>\n    <td>Reserved</td>\n    <td>2</td>\n    <td>Byte array</td>\n    <td>Both bytes shall be 0x00.</td>\n  </tr>\n</table>"
     },
     "chunk_27": {
         "id": 27,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "3.5.3 Repeated Record and Value Validation",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.4.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.5.3 Repeated Record and Value Validation\n\nThe packet length shall equal 1 + (Record Count \u00d7 5) bytes. A Record Count of zero is valid and produces a one-byte packet containing only Record Count. The receiver shall reject packets whose length does not match the declared record count or whose Quality value is not defined."
+        "page_content": "### 3.4.3 Length and Validation\n\nThe packet shall be exactly 18 bytes. Signature shall equal NAVI. Coordinates shall be in range. Use Preferred Route shall be 0x00 or 0x01. Movement Profile shall be defined and Reserved bytes shall be zero."
     },
     "chunk_28": {
         "id": 28,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "4 Validation Summary",
-            "heading_level": 1
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.5 Laboratory Result Packet",
+            "heading_level": 2
         },
-        "page_content": "# 4 Validation Summary\n\n"
+        "page_content": "## 3.5 Laboratory Result Packet\n\n"
     },
     "chunk_29": {
         "id": 29,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "4.1 Fixed-Length Packets",
-            "heading_level": 2
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.5.1 Packet Overview",
+            "heading_level": 3
         },
-        "page_content": "## 4.1 Fixed-Length Packets\n\nThe Sample Packet shall be 34 bytes. The Status Flags Packet shall be 8 bytes. Both require exact-length validation."
+        "page_content": "### 3.5.1 Packet Overview\n\nSender: Spectrometer Subsystem. Receiver: Experiment Orchestrator Subsystem. Flow Direction: Spectrometer Subsystem \u2192 Experiment Orchestrator Subsystem. This variable-length packet contains a result identifier and a count-controlled sequence of measurement records."
     },
     "chunk_30": {
         "id": 30,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "4.2 Conditional and Variable-Length Packets",
-            "heading_level": 2
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.5.2 Field Layout",
+            "heading_level": 3
         },
-        "page_content": "## 4.2 Conditional and Variable-Length Packets\n\nThe Conditional Metadata Packet length depends on the Include Metadata flag and Payload Length. The Text Command Packet length depends on Text Length and includes a two-byte checksum."
+        "page_content": "### 3.5.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Signature</td>\n    <td>4</td>\n    <td>ASCII</td>\n    <td>Exact value: LABR.</td>\n  </tr>\n  <tr>\n    <td>Result ID</td>\n    <td>4</td>\n    <td>Unsigned 32-bit, big-endian</td>\n    <td>0\u20134294967295.</td>\n  </tr>\n  <tr>\n    <td>Measurement Count</td>\n    <td>1</td>\n    <td>Unsigned 8-bit</td>\n    <td>Number of records; 0\u201320.</td>\n  </tr>\n  <tr>\n    <td>Measurement Records</td>\n    <td>Count \u00d7 5</td>\n    <td>Repeated structure</td>\n    <td>Exactly Count records follow.</td>\n  </tr>\n  <tr>\n    <td>Channel ID (per record)</td>\n    <td>1</td>\n    <td>Unsigned 8-bit</td>\n    <td>0\u201331.</td>\n  </tr>\n  <tr>\n    <td>Measured Value (per record)</td>\n    <td>2</td>\n    <td>Signed 16-bit, big-endian</td>\n    <td>Thousandths of configured unit.</td>\n  </tr>\n  <tr>\n    <td>Measurement Valid (per record)</td>\n    <td>1</td>\n    <td>Boolean</td>\n    <td>0x00 = FALSE; 0x01 = TRUE.</td>\n  </tr>\n  <tr>\n    <td>Quality Code (per record)</td>\n    <td>1</td>\n    <td>Unsigned 8-bit enumeration</td>\n    <td>0 = UNKNOWN; 1 = ACCEPTABLE; 2 = SUSPECT; 3 = INVALID.</td>\n  </tr>\n  <tr>\n    <td>Batch Accepted</td>\n    <td>1</td>\n    <td>Boolean</td>\n    <td>0x00 = FALSE; 0x01 = TRUE.</td>\n  </tr>\n</table>"
     },
     "chunk_31": {
         "id": 31,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "4.3 Repeated-Record Packet",
-            "heading_level": 2
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "3.5.3 Repeated Record and Length Validation",
+            "heading_level": 3
         },
-        "page_content": "## 4.3 Repeated-Record Packet\n\nThe Sensor Batch Packet length depends on Record Count. Each record is exactly 5 bytes, and zero records are permitted."
+        "page_content": "### 3.5.3 Repeated Record and Length Validation\n\nTotal length shall equal 10 + (Measurement Count \u00d7 5) bytes. Count may be zero, producing a 10-byte packet with no records. Each record is exactly five bytes. Channel ID and Quality Code shall be valid, and all Boolean values shall be 0x00 or 0x01."
     },
     "chunk_32": {
         "id": 32,
         "metadata": {
-            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/IRS_Five_Packet_Edge_Cases_Indented_Headings.docx",
-            "heading": "5 Document Notes",
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "4 Cross-Packet Interface Summary",
             "heading_level": 1
         },
-        "page_content": "# 5 Document Notes\n\nThis IRS is an illustrative test specification. Where a receiver encounters a malformed packet, it shall reject the packet rather than silently infer missing fields or repair inconsistent lengths. Packet-specific requirements in Section 3 take precedence over general conventions only where an explicit exception is stated."
+        "page_content": "# 4 Cross-Packet Interface Summary\n\n<table>\n  <tr>\n    <td>Packet</td>\n    <td>Sender</td>\n    <td>Receiver</td>\n    <td>Direction</td>\n    <td>Length</td>\n  </tr>\n  <tr>\n    <td>GUI Command</td>\n    <td>GUI Subsystem</td>\n    <td>ZYNQ Control</td>\n    <td>GUI \u2192 ZYNQ</td>\n    <td>14 bytes</td>\n  </tr>\n  <tr>\n    <td>Telemetry Snapshot</td>\n    <td>ZYNQ Control</td>\n    <td>Mission Dashboard</td>\n    <td>ZYNQ \u2192 Dashboard</td>\n    <td>16 bytes</td>\n  </tr>\n  <tr>\n    <td>Archive Transfer</td>\n    <td>Data Archive</td>\n    <td>Storage Gateway</td>\n    <td>Archive \u2192 Gateway</td>\n    <td>Variable</td>\n  </tr>\n  <tr>\n    <td>Navigation Intent</td>\n    <td>Route Planner</td>\n    <td>Autonomous Vehicle</td>\n    <td>Planner \u2192 Vehicle</td>\n    <td>18 bytes</td>\n  </tr>\n  <tr>\n    <td>Laboratory Result</td>\n    <td>Spectrometer</td>\n    <td>Experiment Orchestrator</td>\n    <td>Spectrometer \u2192 Orchestrator</td>\n    <td>Variable</td>\n  </tr>\n</table>"
+    },
+    "chunk_33": {
+        "id": 33,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "5 Validation Summary",
+            "heading_level": 1
+        },
+        "page_content": "# 5 Validation Summary\n\n"
+    },
+    "chunk_34": {
+        "id": 34,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "5.1 Fixed-Length Packets",
+            "heading_level": 2
+        },
+        "page_content": "## 5.1 Fixed-Length Packets\n\nGUI Command is 14 bytes, Telemetry Snapshot is 16 bytes, and Navigation Intent is 18 bytes. Each requires exact-length validation and packet-specific value checks."
+    },
+    "chunk_35": {
+        "id": 35,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "5.2 Variable-Length Packets",
+            "heading_level": 2
+        },
+        "page_content": "## 5.2 Variable-Length Packets\n\nArchive Transfer length is derived from Object Name Length and Content Length. Laboratory Result length is derived from Measurement Count. Receivers shall calculate expected lengths and reject incomplete or overlong candidates."
+    },
+    "chunk_36": {
+        "id": 36,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "5.3 Direction Validation",
+            "heading_level": 2
+        },
+        "page_content": "## 5.3 Direction Validation\n\nPacket identity includes sender and receiver. An analyzer should retain observed source and destination endpoints and verify direction against configured subsystem-to-endpoint mappings. A byte-pattern match alone does not prove correct flow direction."
+    },
+    "chunk_37": {
+        "id": 37,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_5.docx",
+            "heading": "6 Document Notes",
+            "heading_level": 1
+        },
+        "page_content": "# 6 Document Notes\n\nThis is an illustrative IRS for testing document extraction, structured schema generation, and packet-pattern detection. All fields are byte-aligned; no bit-packed fields are used. Every Boolean flag occupies one full byte. Packet examples are intentionally diverse and need not form a coherent real-world system."
     }
 }

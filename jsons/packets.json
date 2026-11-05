@@ -1,0 +1,258 @@
+{
+    "packets": [
+        {
+            "name": "GUI Command Packet",
+            "from_subsystem": "GUI Subsystem",
+            "to_subsystem": "ZYNQ Control Subsystem",
+            "reference_section": "3.1",
+            "total_size_in_bytes": 14,
+            "fields": [
+                {
+                    "field_name": "Start Marker",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": "GUI!"
+                },
+                {
+                    "field_name": "Command ID",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Enable",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Command Argument",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Transaction ID",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "End Marker",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": "!END"
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Telemetry Snapshot Packet",
+            "from_subsystem": "ZYNQ Control Subsystem",
+            "to_subsystem": "Mission Dashboard Subsystem",
+            "reference_section": "3.2",
+            "total_size_in_bytes": 16,
+            "fields": [
+                {
+                    "field_name": "Signature",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": "TLM1"
+                },
+                {
+                    "field_name": "Sample Counter",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Temperature",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Supply Voltage",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Sensor Healthy",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Operating Mode",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Reserved",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Archive Transfer Packet",
+            "from_subsystem": "Data Archive Subsystem",
+            "to_subsystem": "Storage Gateway Subsystem",
+            "reference_section": "3.3",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Signature",
+                    "size_in_bytes": 3,
+                    "is_variable_length": false,
+                    "fixed_value": "ARC"
+                },
+                {
+                    "field_name": "Object Name Length",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Object Name",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Content Length",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Content",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Transfer Complete",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Navigation Intent Packet",
+            "from_subsystem": "Route Planner Subsystem",
+            "to_subsystem": "Autonomous Vehicle Subsystem",
+            "reference_section": "3.4",
+            "total_size_in_bytes": 18,
+            "fields": [
+                {
+                    "field_name": "Signature",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": "NAVI"
+                },
+                {
+                    "field_name": "Waypoint ID",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Latitude",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Longitude",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Use Preferred Route",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Movement Profile",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Reserved",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Laboratory Result Packet",
+            "from_subsystem": "Spectrometer Subsystem",
+            "to_subsystem": "Experiment Orchestrator Subsystem",
+            "reference_section": "3.5",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Signature",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": "LABR"
+                },
+                {
+                    "field_name": "Result ID",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Measurement Count",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Channel ID",
+                    "size_in_bytes": 1,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Measured Value",
+                    "size_in_bytes": 2,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Measurement Valid",
+                    "size_in_bytes": 1,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Quality Code",
+                    "size_in_bytes": 1,
+                    "is_variable_length": true,
+                    "fixed_value": null
+                },
+                {
+                    "field_name": "Batch Accepted",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null
+                }
+            ],
+            "assumptions": []
+        }
+    ]
+}

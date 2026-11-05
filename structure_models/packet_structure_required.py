@@ -9,6 +9,8 @@ class myPacketField(BaseModel):
 
 class myPacket(BaseModel):
     name: str
+    from_subsystem: str | None
+    to_subsystem: str | None
     reference_section: str | None
     total_size_in_bytes: int | None
     fields: list[myPacketField]
