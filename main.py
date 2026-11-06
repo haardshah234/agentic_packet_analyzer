@@ -36,6 +36,8 @@ def main():
     #  O/p file: clean_packets.json in jsons folder
     generate_clean_packets()
 
+    # TODO: Find Packet patterns in clean packets for analysis. Code in packet_analyzer folder.
+
 
 
 if __name__ == "__main__":
