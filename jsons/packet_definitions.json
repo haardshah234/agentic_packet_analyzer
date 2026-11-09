@@ -1,0 +1,132 @@
+{
+    "packets": [
+        {
+            "name": "Sample Packet",
+            "from_subsystem": null,
+            "to_subsystem": null,
+            "reference_section": "3.1",
+            "total_size_in_bytes": 34,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "str",
+                    "size_in_bytes": 6,
+                    "is_variable_length": false,
+                    "fixed_value": "SAMPLE",
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": 20,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Age",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Roll Number",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Footer",
+                    "data_type": "str",
+                    "size_in_bytes": 6,
+                    "is_variable_length": false,
+                    "fixed_value": "FOOTER",
+                    "equation_for_variable_length": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Telemetry Packet",
+            "from_subsystem": null,
+            "to_subsystem": null,
+            "reference_section": "3.2",
+            "total_size_in_bytes": 31,
+            "fields": [
+                {
+                    "field_name": "Device ID",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Sequence Number",
+                    "data_type": "int",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Temperature",
+                    "data_type": "float",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Alarm Active",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Device Label",
+                    "data_type": "str",
+                    "size_in_bytes": 12,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                },
+                {
+                    "field_name": "Timestamp",
+                    "data_type": "int",
+                    "size_in_bytes": 8,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null
+                }
+            ],
+            "assumptions": [
+                "All multi-byte numeric fields use big-endian byte order."
+            ]
+        },
+        {
+            "name": "Variable Payload Packet",
+            "from_subsystem": null,
+            "to_subsystem": null,
+            "reference_section": "3.3",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Payload",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null,
+                    "equation_for_variable_length": "1-1024"
+                }
+            ],
+            "assumptions": []
+        }
+    ]
+}
