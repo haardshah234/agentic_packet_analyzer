@@ -65,5 +65,8 @@ for defin in definitions:
                 field_size_in_hex_string = field["size_in_bytes"]*2
                 if field["data_type"] == "str":
                     print(f"{field["field_name"]} = 0x{payload[:field_size_in_hex_string]} = {bytes.fromhex(payload[:field_size_in_hex_string]).decode()}")
+                if field["data_type"] == "int":
+                    print(f"{field["field_name"]} = 0x{payload[:field_size_in_hex_string]} = {int(f"0x{payload[:field_size_in_hex_string]}",16)}")
+                                    
                 payload = payload[field_size_in_hex_string:]
         print("\n\n")

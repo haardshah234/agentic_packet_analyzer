@@ -12,7 +12,7 @@
                     "data_type": "str",
                     "size_in_bytes": 6,
                     "is_variable_length": false,
-                    "fixed_value": "SAMPLE",
+                    "fixed_value": "HEADER",
                     "equation_for_variable_length": null
                 },
                 {
