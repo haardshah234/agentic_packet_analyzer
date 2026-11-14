@@ -6,16 +6,16 @@
             "heading": "",
             "heading_level": null
         },
-        "page_content": "Interface Requirements Specification\n\nSample Network Communication Protocol\n\nDocument ID: IRS-NCP-002    |    Version: 1.0    |    Purpose: Packet extraction and boundary-detection testing"
+        "page_content": "Interface Requirements Specification\n\nFour Packet Formats for Name-Boundary Detection\n\nDocument ID: IRS-SAMPLE-004    |    Version: 1.0    |    Status: Draft"
     },
     "chunk_2": {
         "id": 2,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "1 Introduction",
+            "heading": "1. INTRODUCTION",
             "heading_level": 1
         },
-        "page_content": "# 1 Introduction\n\nThis Interface Requirements Specification (IRS) defines five illustrative application-level packet formats exchanged between independent subsystems. Each packet definition identifies its sender, receiver, flow direction, field layout, encoding, and validation requirements. The examples are intentionally varied to exercise automated extraction and packet-pattern detection; they do not represent a production system."
+        "page_content": "# 1. INTRODUCTION\n\n"
     },
     "chunk_3": {
         "id": 3,
@@ -24,7 +24,7 @@
             "heading": "1.1 Purpose",
             "heading_level": 2
         },
-        "page_content": "## 1.1 Purpose\n\nThis document provides packet definitions that can be extracted into a machine-readable representation and used to locate and validate packet occurrences within captured network traffic."
+        "page_content": "## 1.1 Purpose\n\nThis document defines four illustrative application-level packet formats that carry the same personal identification information. The formats differ in how the Name field is bounded: fixed size, length prefix, termination character, or packet header and footer."
     },
     "chunk_4": {
         "id": 4,
@@ -33,312 +33,258 @@
             "heading": "1.2 Scope",
             "heading_level": 2
         },
-        "page_content": "## 1.2 Scope\n\nThis IRS specifies packet structures and interface-level validation. It does not prescribe routing, retransmission, or transport connection management."
+        "page_content": "## 1.2 Scope\n\nEach packet contains a Name, Age, and Roll Number. The Age and Roll Number fields retain the definitions from the source sample specification."
     },
     "chunk_5": {
         "id": 5,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "2 General Conventions",
-            "heading_level": 1
+            "heading": "1.3 Original Packet Structure",
+            "heading_level": 2
         },
-        "page_content": "# 2 General Conventions\n\n"
+        "page_content": "## 1.3 Original Packet Structure\n\nThe original packet uses a 6-byte ASCII Header SAMPLE, a 20-byte ASCII Name padded with NULL bytes, a 1-byte Age, a 1-byte Roll Number, and a 6-byte ASCII Footer FOOTER. Its total size is 34 bytes. Packet 3.1 preserves this structure."
     },
     "chunk_6": {
         "id": 6,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "2.1 Subsystem and Flow Direction",
-            "heading_level": 2
+            "heading": "2. GENERAL CONVENTIONS",
+            "heading_level": 1
         },
-        "page_content": "## 2.1 Subsystem and Flow Direction\n\nEach packet definition identifies an originating subsystem (Sender) and destination subsystem (Receiver). Direction is written Sender \u2192 Receiver. The sender constructs the packet; the receiver validates and interprets it. A packet observed in the reverse direction shall not be treated as the same packet type unless explicitly specified."
+        "page_content": "# 2. GENERAL CONVENTIONS\n\n"
     },
     "chunk_7": {
         "id": 7,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "2.2 Byte Numbering and Alignment",
+            "heading": "2.1 Field Order and Byte Numbering",
             "heading_level": 2
         },
-        "page_content": "## 2.2 Byte Numbering and Alignment\n\nOffsets are zero-based from the first byte of the application-level packet. Fields are serialized in table order. Every field occupies a whole number of bytes. This IRS contains no bit-packed fields."
+        "page_content": "## 2.1 Field Order and Byte Numbering\n\nFields are serialized in the order shown in each Field Layout table. Offsets are zero-based from the first byte of the packet. All sizes are measured in bytes."
     },
     "chunk_8": {
         "id": 8,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "2.3 Boolean Representation",
+            "heading": "2.2 Character Encoding",
             "heading_level": 2
         },
-        "page_content": "## 2.3 Boolean Representation\n\nEvery Boolean field occupies exactly one byte: 0x00 represents FALSE and 0x01 represents TRUE. All other values are invalid. A Boolean flag never occupies an individual bit."
+        "page_content": "## 2.2 Character Encoding\n\nHeader, Name, Footer, and Name terminator fields use ASCII. Name lengths are measured in encoded bytes. Names shall contain printable ASCII characters except where a packet definition specifies padding."
     },
     "chunk_9": {
         "id": 9,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "2.4 Numeric and Text Encoding",
+            "heading": "2.3 Age and Roll Number",
             "heading_level": 2
         },
-        "page_content": "## 2.4 Numeric and Text Encoding\n\nInteger widths and byte order are specified per field. Unless stated otherwise, multi-byte integers are little-endian. ASCII and UTF-8 fields shall use their named encodings. Text lengths are measured in encoded bytes."
+        "page_content": "## 2.3 Age and Roll Number\n\nAge occupies exactly 1 byte and is represented as an unsigned 8-bit integer with valid range 0\u2013255. Roll Number occupies exactly 1 byte and is represented as an unsigned 8-bit integer with valid range 0\u2013255. These definitions apply unchanged to all four packets."
     },
     "chunk_10": {
         "id": 10,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "2.5 Packet Boundaries",
+            "heading": "2.4 Common Marker Values",
             "heading_level": 2
         },
-        "page_content": "## 2.5 Packet Boundaries\n\nA packet may occur at the beginning, middle, or end of a larger transport payload. Packet boundaries are determined by the signature, length fields, delimiter fields, or other framing rules in the relevant definition. One TCP payload is not assumed to equal one application packet."
+        "page_content": "## 2.4 Common Marker Values\n\nWhere present, Header shall contain the six ASCII bytes SAMPLE. Where present, Footer shall contain the six ASCII bytes FOOTER."
     },
     "chunk_11": {
         "id": 11,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "2.6 Reserved Values and Validation",
+            "heading": "3.1 Fixed Identity Packet",
             "heading_level": 2
         },
-        "page_content": "## 2.6 Reserved Values and Validation\n\nReserved bytes shall be zero. Enumerations shall contain only listed values. Receivers shall reject invalid lengths, unsupported enumeration values, invalid Boolean encodings, and failed checksums where specified."
+        "page_content": "## 3.1 Fixed Identity Packet\n\n"
     },
     "chunk_12": {
         "id": 12,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3 Functional Requirements",
-            "heading_level": 1
+            "heading": "3.1.1 Packet Overview",
+            "heading_level": 3
         },
-        "page_content": "# 3 Functional Requirements\n\n"
+        "page_content": "### 3.1.1 Packet Overview\n\nThis packet preserves the original fixed-length structure. Name always occupies exactly 20 bytes. Short names are padded with NULL bytes."
     },
     "chunk_13": {
         "id": 13,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.1 Device Identification Packet",
-            "heading_level": 2
+            "heading": "3.1.2 Field Layout",
+            "heading_level": 3
         },
-        "page_content": "## 3.1 Device Identification Packet\n\n"
+        "page_content": "### 3.1.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: SAMPLE.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>20</td>\n    <td>ASCII</td>\n    <td>Exactly 20 bytes. Unused bytes shall be padded with 0x00. Names longer than 20 bytes shall be rejected by default.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER.</td>\n  </tr>\n</table>"
     },
     "chunk_14": {
         "id": 14,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.1.1 Packet Overview",
+            "heading": "3.1.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.1.1 Packet Overview\n\nSender: Device Controller. Receiver: Network Gateway. Flow Direction: Device Controller \u2192 Network Gateway. This fixed-length packet is transmitted when a device connects to the network. It carries device identity, firmware information, capabilities, and reserved bytes."
+        "page_content": "### 3.1.3 Length and Validation\n\nExpected total size: Exactly 34 bytes.\n\nThe packet shall be exactly 34 bytes.\n\nBytes 0\u20135 shall contain SAMPLE.\n\nBytes 6\u201325 shall contain the 20-byte Name field, including NULL padding where required.\n\nByte 26 shall contain Age and byte 27 shall contain Roll Number.\n\nBytes 28\u201333 shall contain FOOTER.\n\nAge and Roll Number shall each be interpreted as unsigned 8-bit values."
     },
     "chunk_15": {
         "id": 15,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.1.2 Field Layout",
-            "heading_level": 3
+            "heading": "3.2 Length-Prefixed Identity Packet",
+            "heading_level": 2
         },
-        "page_content": "### 3.1.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Start Marker</td>\n    <td>2</td>\n    <td>ASCII</td>\n    <td>Exact value: DEV!.</td>\n  </tr>\n  <tr>\n    <td>Packet Type</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Exact value: 0x01.</td>\n  </tr>\n  <tr>\n    <td>Device ID</td>\n    <td>4</td>\n    <td>Unsigned 32-bit, little-endian</td>\n    <td>Valid range: 1\u20134294967295.</td>\n  </tr>\n  <tr>\n    <td>Firmware Version</td>\n    <td>3</td>\n    <td>Byte array</td>\n    <td>Three bytes in major, minor, patch order.</td>\n  </tr>\n  <tr>\n    <td>Device Class</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Valid range: 0\u201365535.</td>\n  </tr>\n  <tr>\n    <td>Capabilities</td>\n    <td>4</td>\n    <td>Unsigned 32-bit, little-endian</td>\n    <td>Bitmask describing supported capabilities.</td>\n  </tr>\n  <tr>\n    <td>Reserved</td>\n    <td>2</td>\n    <td>Byte array</td>\n    <td>Both bytes shall be 0x00.</td>\n  </tr>\n  <tr>\n    <td>End Marker</td>\n    <td>2</td>\n    <td>ASCII</td>\n    <td>Exact value: !D.</td>\n  </tr>\n</table>"
+        "page_content": "## 3.2 Length-Prefixed Identity Packet\n\n"
     },
     "chunk_16": {
         "id": 16,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.1.3 Length and Validation",
+            "heading": "3.2.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.1.3 Length and Validation\n\nThe packet shall be exactly 20 bytes. Start Marker shall equal DEV! and End Marker shall equal !D. Packet Type shall equal 0x01. Device ID shall be non-zero and Reserved bytes shall be zero."
+        "page_content": "### 3.2.1 Packet Overview\n\nThis packet carries a variable-length Name preceded by a one-byte Name Length field. Name Length specifies the exact number of ASCII bytes in Name."
     },
     "chunk_17": {
         "id": 17,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.2 Message Transmission Packet",
-            "heading_level": 2
+            "heading": "3.2.2 Field Layout",
+            "heading_level": 3
         },
-        "page_content": "## 3.2 Message Transmission Packet\n\n"
+        "page_content": "### 3.2.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: SAMPLE.</td>\n  </tr>\n  <tr>\n    <td>Name Length</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Number of encoded bytes in Name; valid range 1\u201364. Does not include this prefix.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Name Length</td>\n    <td>ASCII</td>\n    <td>Variable length. Its byte length shall equal Name Length. NULL padding is not used.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER.</td>\n  </tr>\n</table>"
     },
     "chunk_18": {
         "id": 18,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.2.1 Packet Overview",
+            "heading": "3.2.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.2.1 Packet Overview\n\nSender: Application Controller. Receiver: Message Gateway. Flow Direction: Application Controller \u2192 Message Gateway. This variable-length packet carries a UTF-8 message. The message size is determined by the two-byte length prefix immediately preceding it."
+        "page_content": "### 3.2.3 Length and Validation\n\nExpected total size: Variable: 15 + Name Length bytes.\n\nThe packet shall begin with SAMPLE and end with FOOTER.\n\nName Length shall be between 1 and 64.\n\nThe receiver shall read exactly Name Length bytes for Name.\n\nAge and Roll Number shall each occupy exactly one byte and be interpreted as unsigned 8-bit values.\n\nTotal packet length shall equal 15 + Name Length bytes.\n\nTruncated packets and trailing bytes shall be rejected."
     },
     "chunk_19": {
         "id": 19,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.2.2 Field Layout",
-            "heading_level": 3
+            "heading": "3.3 Delimited Identity Packet",
+            "heading_level": 2
         },
-        "page_content": "### 3.2.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Signature</td>\n    <td>3</td>\n    <td>ASCII</td>\n    <td>Exact value: MSG.</td>\n  </tr>\n  <tr>\n    <td>Packet Type</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Exact value: 0x02.</td>\n  </tr>\n  <tr>\n    <td>Message Length</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Number of encoded bytes in Message only; range 1\u20131024.</td>\n  </tr>\n  <tr>\n    <td>Message</td>\n    <td>Message Length</td>\n    <td>UTF-8</td>\n    <td>Must contain valid UTF-8. Its byte length shall equal Message Length.</td>\n  </tr>\n  <tr>\n    <td>Priority</td>\n    <td>1</td>\n    <td>Unsigned 8-bit enumeration</td>\n    <td>0 = NORMAL; 1 = HIGH; 2 = CRITICAL.</td>\n  </tr>\n  <tr>\n    <td>Checksum</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>CRC-16 over Packet Type, Message Length, Message, and Priority.</td>\n  </tr>\n</table>"
+        "page_content": "## 3.3 Delimited Identity Packet\n\n"
     },
     "chunk_20": {
         "id": 20,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.2.3 Variable-Length Validation",
+            "heading": "3.3.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.2.3 Variable-Length Validation\n\nTotal length shall equal 9 + Message Length bytes. Message Length shall be 1\u20131024. The Message field shall consume exactly Message Length bytes. Priority shall be 0, 1, or 2. Checksum shall match the calculated CRC. This packet has no separate footer."
+        "page_content": "### 3.3.1 Packet Overview\n\nThis packet carries a variable-length Name terminated by the ASCII vertical bar character '|'. The terminator is a separate field and is not part of Name."
     },
     "chunk_21": {
         "id": 21,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.3 Command Request Packet",
-            "heading_level": 2
+            "heading": "3.3.2 Field Layout",
+            "heading_level": 3
         },
-        "page_content": "## 3.3 Command Request Packet\n\n"
+        "page_content": "### 3.3.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: SAMPLE.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Variable</td>\n    <td>ASCII</td>\n    <td>Ends at the first occurrence of terminator byte 0x7C. Valid length: 1\u201364 bytes.</td>\n  </tr>\n  <tr>\n    <td>Name Terminator</td>\n    <td>1</td>\n    <td>ASCII</td>\n    <td>Exact value: '|' (0x7C). Not included in Name.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER.</td>\n  </tr>\n</table>"
     },
     "chunk_22": {
         "id": 22,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.3.1 Packet Overview",
+            "heading": "3.3.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.3.1 Packet Overview\n\nSender: Central Controller. Receiver: Remote Device. Flow Direction: Central Controller \u2192 Remote Device. This packet carries a textual command terminated by a line-feed delimiter. The command text is variable-length and is followed by a one-byte delimiter."
+        "page_content": "### 3.3.3 Length and Validation\n\nExpected total size: Variable: 15 + Name length bytes.\n\nThe packet shall begin with SAMPLE and end with FOOTER.\n\nThe receiver shall locate the first 0x7C byte after Header to determine the end of Name.\n\nName shall contain 1\u201364 ASCII bytes and shall not contain an unescaped vertical bar.\n\nThe 0x7C terminator shall immediately follow Name and is not part of Name.\n\nAge and Roll Number shall each occupy exactly one byte and be interpreted as unsigned 8-bit values.\n\nThe packet shall be rejected if the terminator is missing or the resulting layout is incomplete."
     },
     "chunk_23": {
         "id": 23,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.3.2 Field Layout",
-            "heading_level": 3
+            "heading": "3.4 Header-Footer Bounded Identity Packet",
+            "heading_level": 2
         },
-        "page_content": "### 3.3.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Signature</td>\n    <td>3</td>\n    <td>ASCII</td>\n    <td>Exact value: CMD.</td>\n  </tr>\n  <tr>\n    <td>Packet Type</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Exact value: 0x03.</td>\n  </tr>\n  <tr>\n    <td>Command ID</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 1\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Command Text</td>\n    <td>Variable</td>\n    <td>UTF-8</td>\n    <td>Command text ends at the first 0x0A byte. The delimiter is excluded from this field. Length shall be 1\u2013255 encoded bytes.</td>\n  </tr>\n  <tr>\n    <td>Command Terminator</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Exact value: 0x0A. Terminates Command Text.</td>\n  </tr>\n  <tr>\n    <td>Transaction ID</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Valid range: 0\u201365535.</td>\n  </tr>\n</table>"
+        "page_content": "## 3.4 Header-Footer Bounded Identity Packet\n\n"
     },
     "chunk_24": {
         "id": 24,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.3.3 Delimiter and Length Validation",
+            "heading": "3.4.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.3.3 Delimiter and Length Validation\n\nThe first 0x0A byte after Command ID terminates Command Text and is represented by Command Terminator. Command Text shall contain 1\u2013255 bytes and shall not contain an unescaped 0x0A. The receiver shall reject a packet if the delimiter is absent, the UTF-8 text is invalid, or the Transaction ID is incomplete. No footer is defined."
+        "page_content": "### 3.4.1 Packet Overview\n\nThis packet uses Header and Footer to identify the beginning and end of the complete packet. Name has no separate length prefix and no termination character. Its length is derived from the packet boundary after accounting for the fixed Age and Roll Number fields."
     },
     "chunk_25": {
         "id": 25,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.4 Bulk Data Transfer Packet",
-            "heading_level": 2
+            "heading": "3.4.2 Field Layout",
+            "heading_level": 3
         },
-        "page_content": "## 3.4 Bulk Data Transfer Packet\n\n"
+        "page_content": "### 3.4.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: SAMPLE. Marks the beginning of the packet.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Variable</td>\n    <td>ASCII</td>\n    <td>Occupies the variable-length region after Header and before the fixed trailing fields. Valid length: 1\u201364 bytes.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255. Located immediately before Roll Number and Footer.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255. Located immediately before Footer.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER. Marks the end of the packet.</td>\n  </tr>\n</table>"
     },
     "chunk_26": {
         "id": 26,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.4.1 Packet Overview",
+            "heading": "3.4.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.4.1 Packet Overview\n\nSender: Data Acquisition Unit. Receiver: Storage Controller. Flow Direction: Data Acquisition Unit \u2192 Storage Controller. This packet transfers binary data in chunks. The Data field is variable-length and occupies the bytes remaining in the packet after its fixed metadata. The packet boundary is supplied by the enclosing record length from the transport capture or containing protocol."
+        "page_content": "### 3.4.3 Length and Validation\n\nExpected total size: Variable: 14 + Name length bytes.\n\nThe receiver shall locate SAMPLE to identify the beginning of a candidate packet.\n\nThe receiver shall locate FOOTER to identify the end of the candidate packet.\n\nAge and Roll Number are the two bytes immediately preceding FOOTER.\n\nName consists of all bytes between Header and Age.\n\nName shall contain 1\u201364 ASCII bytes and shall not contain the complete FOOTER marker sequence.\n\nTotal packet length shall equal 14 + Name length bytes.\n\nThe packet shall be rejected if either marker is missing, markers are out of order, or derived Name length is outside the permitted range."
     },
     "chunk_27": {
         "id": 27,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.4.2 Field Layout",
-            "heading_level": 3
+            "heading": "4. CROSS-PACKET INTERFACE SUMMARY",
+            "heading_level": 1
         },
-        "page_content": "### 3.4.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Signature</td>\n    <td>2</td>\n    <td>ASCII</td>\n    <td>Exact value: BD.</td>\n  </tr>\n  <tr>\n    <td>Packet Type</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Exact value: 0x04.</td>\n  </tr>\n  <tr>\n    <td>Transfer ID</td>\n    <td>4</td>\n    <td>Unsigned 32-bit, little-endian</td>\n    <td>Identifies the transfer.</td>\n  </tr>\n  <tr>\n    <td>Chunk Index</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Zero-based index; shall be less than Total Chunks.</td>\n  </tr>\n  <tr>\n    <td>Total Chunks</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Must be greater than zero.</td>\n  </tr>\n  <tr>\n    <td>Data</td>\n    <td>Remaining</td>\n    <td>Byte array</td>\n    <td>Consumes all remaining bytes in the packet after the preceding fields. Length may be 0\u20134096 bytes.</td>\n  </tr>\n</table>"
+        "page_content": "# 4. CROSS-PACKET INTERFACE SUMMARY\n\n<table>\n  <tr>\n    <td>Packet Name</td>\n    <td>Name Boundary Mechanism</td>\n    <td>Name Size</td>\n    <td>Packet Size</td>\n  </tr>\n  <tr>\n    <td>Fixed Identity Packet</td>\n    <td>Fixed field size</td>\n    <td>Exactly 20 bytes</td>\n    <td>34 bytes</td>\n  </tr>\n  <tr>\n    <td>Length-Prefixed Identity Packet</td>\n    <td>One-byte length prefix</td>\n    <td>1\u201364 bytes</td>\n    <td>15 + Name Length</td>\n  </tr>\n  <tr>\n    <td>Delimited Identity Packet</td>\n    <td>ASCII '|' terminator</td>\n    <td>1\u201364 bytes</td>\n    <td>15 + Name Length</td>\n  </tr>\n  <tr>\n    <td>Header-Footer Bounded Identity Packet</td>\n    <td>Packet Header and Footer</td>\n    <td>1\u201364 bytes</td>\n    <td>14 + Name Length</td>\n  </tr>\n</table>"
     },
     "chunk_28": {
         "id": 28,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.4.3 Remaining-Data and Length Validation",
-            "heading_level": 3
+            "heading": "5. VALIDATION SUMMARY",
+            "heading_level": 1
         },
-        "page_content": "### 3.4.3 Remaining-Data and Length Validation\n\nThe fixed metadata occupies 11 bytes. Data shall consume all bytes remaining within the enclosing packet boundary and shall not exceed 4096 bytes. Chunk Index shall be less than Total Chunks, and Total Chunks shall be greater than zero. No checksum or footer is defined in this packet format."
+        "page_content": "# 5. VALIDATION SUMMARY\n\n"
     },
     "chunk_29": {
         "id": 29,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.5 Streaming Telemetry Packet",
+            "heading": "5.1 Fixed-Length Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.5 Streaming Telemetry Packet\n\n"
+        "page_content": "## 5.1 Fixed-Length Packet\n\nThe Fixed Identity Packet shall be validated against its exact 34-byte size and fixed field offsets."
     },
     "chunk_30": {
         "id": 30,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.5.1 Packet Overview",
-            "heading_level": 3
+            "heading": "5.2 Variable-Length Packets",
+            "heading_level": 2
         },
-        "page_content": "### 3.5.1 Packet Overview\n\nSender: Sensor Controller. Receiver: Monitoring Gateway. Flow Direction: Sensor Controller \u2192 Monitoring Gateway. This variable-length packet periodically reports sensor measurements. It has a synchronization header and a length field, but deliberately has no footer. The packet ends immediately after the declared payload."
+        "page_content": "## 5.2 Variable-Length Packets\n\nThe Length-Prefixed Identity Packet derives Name length from Name Length. The Delimited Identity Packet derives Name length from the 0x7C terminator. The Header-Footer Bounded Identity Packet derives Name length from the complete packet boundary and the fixed trailing Age and Roll Number fields."
     },
     "chunk_31": {
         "id": 31,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.5.2 Field Layout",
-            "heading_level": 3
+            "heading": "5.3 Common Numeric Field Validation",
+            "heading_level": 2
         },
-        "page_content": "### 3.5.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>2</td>\n    <td>Byte array</td>\n    <td>Exact value: 0xAA 0x55. Marks the beginning of the packet.</td>\n  </tr>\n  <tr>\n    <td>Packet Type</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Exact value: 0x05.</td>\n  </tr>\n  <tr>\n    <td>Device ID</td>\n    <td>4</td>\n    <td>Unsigned 32-bit, little-endian</td>\n    <td>Identifies the transmitting device.</td>\n  </tr>\n  <tr>\n    <td>Sequence Number</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Incremented for each packet sent by the same device.</td>\n  </tr>\n  <tr>\n    <td>Payload Length</td>\n    <td>2</td>\n    <td>Unsigned 16-bit, little-endian</td>\n    <td>Number of bytes in Payload only; range 1\u20132048.</td>\n  </tr>\n  <tr>\n    <td>Payload</td>\n    <td>Payload Length</td>\n    <td>Byte array</td>\n    <td>Contains telemetry data. Its byte length shall equal Payload Length. The packet ends immediately after this field.</td>\n  </tr>\n</table>"
+        "page_content": "## 5.3 Common Numeric Field Validation\n\nFor all four packet types, Age and Roll Number shall each be exactly one byte and shall be interpreted as unsigned 8-bit integers with valid values from 0 through 255."
     },
     "chunk_32": {
         "id": 32,
         "metadata": {
             "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "3.5.3 Packet Boundary and Length Validation",
-            "heading_level": 3
-        },
-        "page_content": "### 3.5.3 Packet Boundary and Length Validation\n\nTotal packet length shall equal 11 + Payload Length bytes. Payload Length shall be 1\u20132048. The receiver shall read exactly the declared number of payload bytes and mark the packet boundary immediately after the final payload byte. This packet has a header but no footer, terminator, or trailing checksum. The absence of a footer shall not cause rejection."
-    },
-    "chunk_33": {
-        "id": 33,
-        "metadata": {
-            "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "4 Cross-Packet Interface Summary",
+            "heading": "6. DOCUMENT NOTES",
             "heading_level": 1
         },
-        "page_content": "# 4 Cross-Packet Interface Summary\n\n<table>\n  <tr>\n    <td>Packet</td>\n    <td>Sender</td>\n    <td>Receiver</td>\n    <td>Direction</td>\n    <td>Length</td>\n  </tr>\n  <tr>\n    <td>Device Identification</td>\n    <td>Device Controller</td>\n    <td>Network Gateway</td>\n    <td>Controller \u2192 Gateway</td>\n    <td>20 bytes</td>\n  </tr>\n  <tr>\n    <td>Message Transmission</td>\n    <td>Application Controller</td>\n    <td>Message Gateway</td>\n    <td>Application \u2192 Gateway</td>\n    <td>Variable</td>\n  </tr>\n  <tr>\n    <td>Command Request</td>\n    <td>Central Controller</td>\n    <td>Remote Device</td>\n    <td>Controller \u2192 Device</td>\n    <td>Variable</td>\n  </tr>\n  <tr>\n    <td>Bulk Data Transfer</td>\n    <td>Data Acquisition Unit</td>\n    <td>Storage Controller</td>\n    <td>Acquisition \u2192 Storage</td>\n    <td>11\u20134107 bytes</td>\n  </tr>\n  <tr>\n    <td>Streaming Telemetry</td>\n    <td>Sensor Controller</td>\n    <td>Monitoring Gateway</td>\n    <td>Sensor \u2192 Gateway</td>\n    <td>12\u20132059 bytes</td>\n  </tr>\n</table>"
-    },
-    "chunk_34": {
-        "id": 34,
-        "metadata": {
-            "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "5 Validation Summary",
-            "heading_level": 1
-        },
-        "page_content": "# 5 Validation Summary\n\n"
-    },
-    "chunk_35": {
-        "id": 35,
-        "metadata": {
-            "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "5.1 Fixed-Length Packets",
-            "heading_level": 2
-        },
-        "page_content": "## 5.1 Fixed-Length Packets\n\nDevice Identification is fixed at 20 bytes. It requires exact-length validation, marker validation, packet-type validation, and reserved-byte checks."
-    },
-    "chunk_36": {
-        "id": 36,
-        "metadata": {
-            "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "5.2 Variable-Length Packets",
-            "heading_level": 2
-        },
-        "page_content": "## 5.2 Variable-Length Packets\n\nMessage Transmission length is derived from Message Length. Command Request is terminated by the 0x0A delimiter. Bulk Data Transfer consumes the bytes remaining within its enclosing packet boundary. Streaming Telemetry length is derived from Payload Length. Receivers shall reject incomplete, malformed, or overlong candidates according to each packet definition."
-    },
-    "chunk_37": {
-        "id": 37,
-        "metadata": {
-            "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "5.3 Direction Validation",
-            "heading_level": 2
-        },
-        "page_content": "## 5.3 Direction Validation\n\nPacket identity includes sender and receiver. An analyzer should retain observed source and destination endpoints and verify direction against configured subsystem-to-endpoint mappings. A byte-pattern match alone does not prove correct flow direction."
-    },
-    "chunk_38": {
-        "id": 38,
-        "metadata": {
-            "source": "/Users/haardshah/Documents/coding/educosys/Packet_Analyser/sample_docs/sample_6.docx",
-            "heading": "6 Document Notes",
-            "heading_level": 1
-        },
-        "page_content": "# 6 Document Notes\n\nThis is an illustrative IRS for testing document extraction, structured schema generation, and packet-pattern detection. All fields are byte-aligned; no bit-packed fields are used. Every Boolean flag, if present, occupies one full byte. The five packet examples intentionally exercise fixed-size, length-prefixed, delimiter-terminated, remaining-byte, and header-only framing. The final packet (Streaming Telemetry) has a header and length field but no footer."
+        "page_content": "# 6. DOCUMENT NOTES\n\nThe first packet retains the original sample packet's field sizes, marker values, field order, and Age/Roll Number definitions. The remaining three packets change the mechanism used to determine the Name field boundary. Each packet has at most one Header field; no packet uses duplicate or nested headers.\n\nOriginal demonstration values: Name = AARAV SHAH; Age = 22; Roll Number = 15."
     }
 }

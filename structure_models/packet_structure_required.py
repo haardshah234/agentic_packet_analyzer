@@ -8,7 +8,7 @@ class myPacketField(BaseModel):
     size_in_bytes: int | None
     is_variable_length: bool = False
     
-    fixed_value: str| int | float | None = None
+    fixed_value: str | int | float | None = None
     equation_for_variable_length: str | None = None
 
     #  Boundary detection for variable-length fields:
