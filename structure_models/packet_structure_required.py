@@ -8,19 +8,19 @@ class myPacketField(BaseModel):
     size_in_bytes: int | None
     is_variable_length: bool = False
     
-    fixed_value: Any | None
-    equation_for_variable_length: str | None
+    fixed_value: str| int | float | None = None
+    equation_for_variable_length: str | None = None
 
     #  Boundary detection for variable-length fields:
     boundary_type: Literal["fixed", "length_prefix", "delimiter", "remaining"]
 
     #  For length-prefixed fields:
-    length_prefix_bytes: int | None
-    length_prefix_endian: Literal["big", "little"] | None
-    length_include_prefix: bool | None
+    length_prefix_bytes: int | None = None
+    length_prefix_endian: Literal["big", "little"] | None = None
+    length_include_prefix: bool | None = None
 
     #  For delimiter terminated fields:
-    delimiter: str | None
+    delimiter: str | None = None
 
 
     #  validation to avoid inconsistent replies.

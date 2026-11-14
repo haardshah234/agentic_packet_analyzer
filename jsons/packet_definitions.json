@@ -1,129 +1,473 @@
 {
     "packets": [
         {
-            "name": "Sample Packet",
-            "from_subsystem": null,
-            "to_subsystem": null,
+            "name": "Device Identification Packet",
+            "from_subsystem": "Device Controller",
+            "to_subsystem": "Network Gateway",
             "reference_section": "3.1",
-            "total_size_in_bytes": 34,
+            "total_size_in_bytes": 20,
             "fields": [
                 {
-                    "field_name": "Header",
+                    "field_name": "Start Marker",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 2,
                     "is_variable_length": false,
-                    "fixed_value": "HEADER",
-                    "equation_for_variable_length": null
+                    "fixed_value": "DEV!",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
                 },
                 {
-                    "field_name": "Name",
-                    "data_type": "str",
-                    "size_in_bytes": 20,
-                    "is_variable_length": false,
-                    "fixed_value": null,
-                    "equation_for_variable_length": null
-                },
-                {
-                    "field_name": "Age",
+                    "field_name": "Packet Type",
                     "data_type": "int",
                     "size_in_bytes": 1,
                     "is_variable_length": false,
-                    "fixed_value": null,
-                    "equation_for_variable_length": null
+                    "fixed_value": 1,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
                 },
                 {
-                    "field_name": "Roll Number",
+                    "field_name": "Device ID",
                     "data_type": "int",
-                    "size_in_bytes": 1,
+                    "size_in_bytes": 4,
                     "is_variable_length": false,
                     "fixed_value": null,
-                    "equation_for_variable_length": null
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
                 },
                 {
-                    "field_name": "Footer",
-                    "data_type": "str",
-                    "size_in_bytes": 6,
+                    "field_name": "Firmware Version",
+                    "data_type": "int",
+                    "size_in_bytes": 3,
                     "is_variable_length": false,
-                    "fixed_value": "FOOTER",
-                    "equation_for_variable_length": null
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Device Class",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Capabilities",
+                    "data_type": "int",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Reserved",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": [
+                        0,
+                        0
+                    ],
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "End Marker",
+                    "data_type": "str",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": "!D",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
                 }
             ],
             "assumptions": []
         },
         {
-            "name": "Telemetry Packet",
-            "from_subsystem": null,
-            "to_subsystem": null,
+            "name": "Message Transmission Packet",
+            "from_subsystem": "Application Controller",
+            "to_subsystem": "Message Gateway",
             "reference_section": "3.2",
-            "total_size_in_bytes": 31,
+            "total_size_in_bytes": null,
             "fields": [
                 {
-                    "field_name": "Device ID",
+                    "field_name": "Signature",
+                    "data_type": "str",
+                    "size_in_bytes": 3,
+                    "is_variable_length": false,
+                    "fixed_value": "MSG",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Packet Type",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": 2,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Message Length",
                     "data_type": "int",
                     "size_in_bytes": 2,
                     "is_variable_length": false,
                     "fixed_value": null,
-                    "equation_for_variable_length": null
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
                 },
                 {
-                    "field_name": "Sequence Number",
-                    "data_type": "int",
-                    "size_in_bytes": 4,
-                    "is_variable_length": false,
-                    "fixed_value": null,
-                    "equation_for_variable_length": null
-                },
-                {
-                    "field_name": "Temperature",
-                    "data_type": "float",
-                    "size_in_bytes": 4,
-                    "is_variable_length": false,
-                    "fixed_value": null,
-                    "equation_for_variable_length": null
-                },
-                {
-                    "field_name": "Alarm Active",
-                    "data_type": "int",
-                    "size_in_bytes": 1,
-                    "is_variable_length": false,
-                    "fixed_value": null,
-                    "equation_for_variable_length": null
-                },
-                {
-                    "field_name": "Device Label",
-                    "data_type": "str",
-                    "size_in_bytes": 12,
-                    "is_variable_length": false,
-                    "fixed_value": null,
-                    "equation_for_variable_length": null
-                },
-                {
-                    "field_name": "Timestamp",
-                    "data_type": "int",
-                    "size_in_bytes": 8,
-                    "is_variable_length": false,
-                    "fixed_value": null,
-                    "equation_for_variable_length": null
-                }
-            ],
-            "assumptions": [
-                "All multi-byte numeric fields use big-endian byte order."
-            ]
-        },
-        {
-            "name": "Variable Payload Packet",
-            "from_subsystem": null,
-            "to_subsystem": null,
-            "reference_section": "3.3",
-            "total_size_in_bytes": null,
-            "fields": [
-                {
-                    "field_name": "Payload",
+                    "field_name": "Message",
                     "data_type": "str",
                     "size_in_bytes": null,
                     "is_variable_length": true,
                     "fixed_value": null,
-                    "equation_for_variable_length": "1-1024"
+                    "equation_for_variable_length": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 2,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Priority",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Checksum",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Command Request Packet",
+            "from_subsystem": "Central Controller",
+            "to_subsystem": "Remote Device",
+            "reference_section": "3.3",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Signature",
+                    "data_type": "str",
+                    "size_in_bytes": 3,
+                    "is_variable_length": false,
+                    "fixed_value": "CMD",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Packet Type",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": 3,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Command ID",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Command Text",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "delimiter",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": "\n"
+                },
+                {
+                    "field_name": "Command Terminator",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": 10,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Transaction ID",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Bulk Data Transfer Packet",
+            "from_subsystem": "Data Acquisition Unit",
+            "to_subsystem": "Storage Controller",
+            "reference_section": "3.4",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Signature",
+                    "data_type": "str",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": "BD",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Packet Type",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": 4,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Transfer ID",
+                    "data_type": "int",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Chunk Index",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Total Chunks",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Data",
+                    "data_type": "int",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "remaining",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Streaming Telemetry Packet",
+            "from_subsystem": "Sensor Controller",
+            "to_subsystem": "Monitoring Gateway",
+            "reference_section": "3.5",
+            "total_size_in_bytes": null,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": [
+                        170,
+                        85
+                    ],
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Packet Type",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": 5,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Device ID",
+                    "data_type": "int",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Sequence Number",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Payload Length",
+                    "data_type": "int",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Payload",
+                    "data_type": "int",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 2,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
                 }
             ],
             "assumptions": []

@@ -36,6 +36,7 @@ for defin in definitions:
         print("Packet doesn't contain a header, cannot match.")
         continue
     else:
+        print("Expected Header    =>  ", expected_header)
         print(f"Expected header found: {expected_header}\n{expected_header.encode().hex()}")
     if not expected_footer:
         print("Packet doesn't contain a footer, cannot match.")
