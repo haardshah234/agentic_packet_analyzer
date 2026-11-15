@@ -52,7 +52,7 @@ for defin in definitions:
         start_index = payload.find(expected_header_hex)
         stop_index = payload.find(expected_footer_hex)
         if start_index < 0:
-            print("Header Not found in payload, skipping to next captured packet...")
+            print("Header Not found in payload, skipping to next captured packet...\n...\n\n")
             continue
         if stop_index < 0:
             print("Packet header was observed, but footer was not observed. Plausible snipping of packet.")
