@@ -21,3 +21,4 @@ while True:
 
     conn.close()
     print("Client disconnected.")
+    break

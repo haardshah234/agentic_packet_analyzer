@@ -6,6 +6,7 @@
             "to_subsystem": null,
             "reference_section": "3.1",
             "total_size_in_bytes": 34,
+            "contains_variable_lengthed_fields": false,
             "fields": [
                 {
                     "field_name": "Header",
@@ -81,6 +82,7 @@
             "to_subsystem": null,
             "reference_section": "3.2",
             "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
             "fields": [
                 {
                     "field_name": "Header",
@@ -117,7 +119,7 @@
                     "equation_for_variable_length": null,
                     "boundary_type": "length_prefix",
                     "length_prefix_bytes": 1,
-                    "length_prefix_endian": "big",
+                    "length_prefix_endian": "little",
                     "length_include_prefix": false,
                     "delimiter": null
                 },
@@ -169,6 +171,7 @@
             "to_subsystem": null,
             "reference_section": "3.3",
             "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
             "fields": [
                 {
                     "field_name": "Header",
@@ -257,6 +260,7 @@
             "to_subsystem": null,
             "reference_section": "3.4",
             "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
             "fields": [
                 {
                     "field_name": "Header",
