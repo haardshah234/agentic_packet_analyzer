@@ -1,7 +1,7 @@
 {
     "packets": [
         {
-            "name": "Fixed Identity Packet",
+            "name": "Fixed Name Packet",
             "from_subsystem": null,
             "to_subsystem": null,
             "reference_section": "3.1",
@@ -77,7 +77,7 @@
             "assumptions": []
         },
         {
-            "name": "Length-Prefixed Identity Packet",
+            "name": "LP-Exclusive Packet (Length excludes prefix)",
             "from_subsystem": null,
             "to_subsystem": null,
             "reference_section": "3.2",
@@ -166,7 +166,7 @@
             "assumptions": []
         },
         {
-            "name": "Delimited Identity Packet",
+            "name": "LP-Exclusive Packet (Length includes prefix)",
             "from_subsystem": null,
             "to_subsystem": null,
             "reference_section": "3.3",
@@ -187,29 +187,29 @@
                     "delimiter": null
                 },
                 {
+                    "field_name": "Name Length",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
                     "field_name": "Name",
                     "data_type": "str",
                     "size_in_bytes": null,
                     "is_variable_length": true,
                     "fixed_value": null,
                     "equation_for_variable_length": null,
-                    "boundary_type": "delimiter",
-                    "length_prefix_bytes": null,
-                    "length_prefix_endian": null,
-                    "length_include_prefix": null,
-                    "delimiter": "|"
-                },
-                {
-                    "field_name": "Name Terminator",
-                    "data_type": "str",
-                    "size_in_bytes": 1,
-                    "is_variable_length": false,
-                    "fixed_value": "|",
-                    "equation_for_variable_length": null,
-                    "boundary_type": "fixed",
-                    "length_prefix_bytes": null,
-                    "length_prefix_endian": null,
-                    "length_include_prefix": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 1,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": true,
                     "delimiter": null
                 },
                 {
@@ -255,10 +255,99 @@
             "assumptions": []
         },
         {
-            "name": "Header-Footer Bounded Identity Packet",
+            "name": "Delimited Identity Packet",
             "from_subsystem": null,
             "to_subsystem": null,
             "reference_section": "3.4",
+            "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "str",
+                    "size_in_bytes": 6,
+                    "is_variable_length": false,
+                    "fixed_value": "HEADER",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Age",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "delimiter",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": "\\"
+                },
+                {
+                    "field_name": "Name Terminator",
+                    "data_type": "str",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": "\\",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Roll Number",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "fixed_value": null,
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Footer",
+                    "data_type": "str",
+                    "size_in_bytes": 6,
+                    "is_variable_length": false,
+                    "fixed_value": "FOOTER",
+                    "equation_for_variable_length": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": null,
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Header-Footer Bounded Identity Packet",
+            "from_subsystem": null,
+            "to_subsystem": null,
+            "reference_section": "3.5",
             "total_size_in_bytes": null,
             "contains_variable_lengthed_fields": true,
             "fields": [

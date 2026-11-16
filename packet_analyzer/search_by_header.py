@@ -25,7 +25,7 @@ for pac in definitions:
 print("\nheaders:")
 for defin in definitions:
     if not defin["contains_variable_lengthed_fields"]:
-        header = defin["fields"][0]["field_name"]
+        #header = defin["fields"][0]["field_name"]
         expected_header:str = defin["fields"][0]["fixed_value"]
         expected_footer:str = defin["fields"][-1]["fixed_value"]
         print()

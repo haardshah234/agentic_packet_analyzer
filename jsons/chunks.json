@@ -93,10 +93,10 @@
         "id": 11,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
-            "heading": "3.1 Fixed Identity Packet",
+            "heading": "3.1 Fixed Name Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.1 Fixed Identity Packet\n\n"
+        "page_content": "## 3.1 Fixed Name Packet\n\n"
     },
     "chunk_12": {
         "id": 12,
@@ -129,10 +129,10 @@
         "id": 15,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
-            "heading": "3.2 Length-Prefixed Identity Packet",
+            "heading": "3.2 LP-Exclusive Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.2 Length-Prefixed Identity Packet\n\n"
+        "page_content": "## 3.2 LP-Exclusive Packet\n\n"
     },
     "chunk_16": {
         "id": 16,
@@ -165,10 +165,10 @@
         "id": 19,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
-            "heading": "3.3 Delimited Identity Packet",
+            "heading": "3.3 LP-Exclusive Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.3 Delimited Identity Packet\n\n"
+        "page_content": "## 3.3 LP-Exclusive Packet\n\n"
     },
     "chunk_20": {
         "id": 20,
@@ -177,7 +177,7 @@
             "heading": "3.3.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.3.1 Packet Overview\n\nThis packet carries a variable-length Name terminated by the ASCII vertical bar character '|'. The terminator is a separate field and is not part of Name."
+        "page_content": "### 3.3.1 Packet Overview\n\nThis packet carries a variable-length Name preceded by a one-byte Name Length field. Name Length specifies the exact number of ASCII bytes in Name."
     },
     "chunk_21": {
         "id": 21,
@@ -186,7 +186,7 @@
             "heading": "3.3.2 Field Layout",
             "heading_level": 3
         },
-        "page_content": "### 3.3.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: HEADER.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Variable</td>\n    <td>ASCII</td>\n    <td>Ends at the first occurrence of terminator byte 0x7C. Valid length: 1\u201364 bytes.</td>\n  </tr>\n  <tr>\n    <td>Name Terminator</td>\n    <td>1</td>\n    <td>ASCII</td>\n    <td>Exact value: '|' (0x7C). Not included in Name.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER.</td>\n  </tr>\n</table>"
+        "page_content": "### 3.3.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: HEADER.</td>\n  </tr>\n  <tr>\n    <td>Name Length</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Number of encoded bytes in Name; valid range 1\u201364. Including this prefix.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Name Length</td>\n    <td>ASCII</td>\n    <td>Variable length. Its byte length shall equal Name Length. NULL padding is not used.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER.</td>\n  </tr>\n</table>"
     },
     "chunk_22": {
         "id": 22,
@@ -195,16 +195,16 @@
             "heading": "3.3.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.3.3 Length and Validation\n\nExpected total size: Variable: 15 + Name length bytes.\n\nThe packet shall begin with HEADER and end with FOOTER.\n\nThe receiver shall locate the first 0x7C byte after Header to determine the end of Name.\n\nName shall contain 1\u201364 ASCII bytes and shall not contain an unescaped vertical bar.\n\nThe 0x7C terminator shall immediately follow Name and is not part of Name.\n\nAge and Roll Number shall each occupy exactly one byte and be interpreted as unsigned 8-bit values.\n\nThe packet shall be rejected if the terminator is missing or the resulting layout is incomplete."
+        "page_content": "### 3.3.3 Length and Validation\n\nExpected total size: Variable: 15 + Name Length bytes.\n\nThe packet shall begin with HEADER and end with FOOTER.\n\nName Length shall be between 1 and 64, in little endian.\n\nThe receiver shall read exactly Name Length bytes for Name.\n\nAge and Roll Number shall each occupy exactly one byte and be interpreted as unsigned 8-bit values.\n\nTotal packet length shall equal 15 + Name Length bytes.\n\nTruncated packets and trailing bytes shall be rejected."
     },
     "chunk_23": {
         "id": 23,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
-            "heading": "3.4 Header-Footer Bounded Identity Packet",
+            "heading": "3.4 Delimited Identity Packet",
             "heading_level": 2
         },
-        "page_content": "## 3.4 Header-Footer Bounded Identity Packet\n\n"
+        "page_content": "## 3.4 Delimited Identity Packet\n\n"
     },
     "chunk_24": {
         "id": 24,
@@ -213,7 +213,7 @@
             "heading": "3.4.1 Packet Overview",
             "heading_level": 3
         },
-        "page_content": "### 3.4.1 Packet Overview\n\nThis packet uses Header and Footer to identify the beginning and end of the complete packet. Name has no separate length prefix and no termination character. Its length is derived from the packet boundary after accounting for the fixed Age and Roll Number fields."
+        "page_content": "### 3.4.1 Packet Overview\n\nThis packet carries a variable-length Name terminated by the ASCII vertical bar character '|'. The terminator is a separate field and is not part of Name."
     },
     "chunk_25": {
         "id": 25,
@@ -222,7 +222,7 @@
             "heading": "3.4.2 Field Layout",
             "heading_level": 3
         },
-        "page_content": "### 3.4.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: HEADER. Marks the beginning of the packet.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Variable</td>\n    <td>ASCII</td>\n    <td>Occupies the variable-length region after Header and before the fixed trailing fields. Valid length: 1\u201364 bytes.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255. Located immediately before Roll Number and Footer.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255. Located immediately before Footer.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER. Marks the end of the packet.</td>\n  </tr>\n</table>"
+        "page_content": "### 3.4.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: HEADER.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Variable</td>\n    <td>ASCII</td>\n    <td>Ends at the first occurrence of terminator byte 0x5C. Valid length: 1\u201364 bytes.</td>\n  </tr>\n  <tr>\n    <td>Name Terminator</td>\n    <td>1</td>\n    <td>ASCII</td>\n    <td>Exact value: '\\' (0x5C). Not included in Name.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER.</td>\n  </tr>\n</table>"
     },
     "chunk_26": {
         "id": 26,
@@ -231,10 +231,46 @@
             "heading": "3.4.3 Length and Validation",
             "heading_level": 3
         },
-        "page_content": "### 3.4.3 Length and Validation\n\nExpected total size: Variable: 14 + Name length bytes.\n\nThe receiver shall locate HEADER to identify the beginning of a candidate packet.\n\nThe receiver shall locate FOOTER to identify the end of the candidate packet.\n\nAge and Roll Number are the two bytes immediately preceding FOOTER.\n\nName consists of all bytes between Header and Age.\n\nName shall contain 1\u201364 ASCII bytes and shall not contain the complete FOOTER marker sequence.\n\nTotal packet length shall equal 14 + Name length bytes.\n\nThe packet shall be rejected if either marker is missing, markers are out of order, or derived Name length is outside the permitted range."
+        "page_content": "### 3.4.3 Length and Validation\n\nExpected total size: Variable: 15 + Name length bytes.\n\nThe packet shall begin with HEADER and end with FOOTER.\n\nThe receiver shall locate the first 0x5C byte after Header to determine the end of Name.\n\nName shall contain 1\u201364 ASCII bytes and shall not contain an unescaped vertical bar.\n\nThe 0x5C terminator shall immediately follow Name and is not part of Name.\n\nAge and Roll Number shall each occupy exactly one byte and be interpreted as unsigned 8-bit values.\n\nThe packet shall be rejected if the terminator is missing or the resulting layout is incomplete."
     },
     "chunk_27": {
         "id": 27,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
+            "heading": "3.5 Header-Footer Bounded Identity Packet",
+            "heading_level": 2
+        },
+        "page_content": "## 3.5 Header-Footer Bounded Identity Packet\n\n"
+    },
+    "chunk_28": {
+        "id": 28,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
+            "heading": "3.5.1 Packet Overview",
+            "heading_level": 3
+        },
+        "page_content": "### 3.5.1 Packet Overview\n\nThis packet uses Header and Footer to identify the beginning and end of the complete packet. Name has no separate length prefix and no termination character. Its length is derived from the packet boundary after accounting for the fixed Age and Roll Number fields."
+    },
+    "chunk_29": {
+        "id": 29,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
+            "heading": "3.5.2 Field Layout",
+            "heading_level": 3
+        },
+        "page_content": "### 3.5.2 Field Layout\n\n<table>\n  <tr>\n    <td>Field</td>\n    <td>Size (bytes)</td>\n    <td>Type / Encoding</td>\n    <td>Requirements</td>\n  </tr>\n  <tr>\n    <td>Header</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: HEADER. Marks the beginning of the packet.</td>\n  </tr>\n  <tr>\n    <td>Age</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255. Located immediately before Roll Number and Footer.</td>\n  </tr>\n  <tr>\n    <td>Roll Number</td>\n    <td>1</td>\n    <td>Unsigned 8-bit integer</td>\n    <td>Valid range: 0\u2013255. Located immediately before Footer.</td>\n  </tr>\n  <tr>\n    <td>Name</td>\n    <td>Variable</td>\n    <td>ASCII</td>\n    <td>Occupies the variable-length region after Header and before the fixed trailing fields. Valid length: 1\u201364 bytes.</td>\n  </tr>\n  <tr>\n    <td>Footer</td>\n    <td>6</td>\n    <td>ASCII</td>\n    <td>Exact value: FOOTER. Marks the end of the packet.</td>\n  </tr>\n</table>"
+    },
+    "chunk_30": {
+        "id": 30,
+        "metadata": {
+            "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
+            "heading": "3.5.3 Length and Validation",
+            "heading_level": 3
+        },
+        "page_content": "### 3.5.3 Length and Validation\n\nExpected total size: Variable: 14 + Name length bytes.\n\nThe receiver shall locate HEADER to identify the beginning of a candidate packet.\n\nThe receiver shall locate FOOTER to identify the end of the candidate packet.\n\nAge and Roll Number are the two bytes immediately preceding FOOTER.\n\nName consists of all bytes between Header and Age.\n\nName shall contain 1\u201364 ASCII bytes and shall not contain the complete FOOTER marker sequence.\n\nTotal packet length shall equal 14 + Name length bytes.\n\nThe packet shall be rejected if either marker is missing, markers are out of order, or derived Name length is outside the permitted range."
+    },
+    "chunk_31": {
+        "id": 31,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
             "heading": "4. CROSS-PACKET INTERFACE SUMMARY",
@@ -242,8 +278,8 @@
         },
         "page_content": "# 4. CROSS-PACKET INTERFACE SUMMARY\n\n<table>\n  <tr>\n    <td>Packet Name</td>\n    <td>Name Boundary Mechanism</td>\n    <td>Name Size</td>\n    <td>Packet Size</td>\n  </tr>\n  <tr>\n    <td>Fixed Identity Packet</td>\n    <td>Fixed field size</td>\n    <td>Exactly 20 bytes</td>\n    <td>34 bytes</td>\n  </tr>\n  <tr>\n    <td>Length-Prefixed Identity Packet</td>\n    <td>One-byte length prefix</td>\n    <td>1\u201364 bytes</td>\n    <td>15 + Name Length</td>\n  </tr>\n  <tr>\n    <td>Delimited Identity Packet</td>\n    <td>ASCII '|' terminator</td>\n    <td>1\u201364 bytes</td>\n    <td>15 + Name Length</td>\n  </tr>\n  <tr>\n    <td>Header-Footer Bounded Identity Packet</td>\n    <td>Packet Header and Footer</td>\n    <td>1\u201364 bytes</td>\n    <td>14 + Name Length</td>\n  </tr>\n</table>"
     },
-    "chunk_28": {
-        "id": 28,
+    "chunk_32": {
+        "id": 32,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
             "heading": "5. VALIDATION SUMMARY",
@@ -251,8 +287,8 @@
         },
         "page_content": "# 5. VALIDATION SUMMARY\n\n"
     },
-    "chunk_29": {
-        "id": 29,
+    "chunk_33": {
+        "id": 33,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
             "heading": "5.1 Fixed-Length Packet",
@@ -260,17 +296,17 @@
         },
         "page_content": "## 5.1 Fixed-Length Packet\n\nThe Fixed Identity Packet shall be validated against its exact 34-byte size and fixed field offsets."
     },
-    "chunk_30": {
-        "id": 30,
+    "chunk_34": {
+        "id": 34,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
             "heading": "5.2 Variable-Length Packets",
             "heading_level": 2
         },
-        "page_content": "## 5.2 Variable-Length Packets\n\nThe Length-Prefixed Identity Packet derives Name length from Name Length. The Delimited Identity Packet derives Name length from the 0x7C terminator. The Header-Footer Bounded Identity Packet derives Name length from the complete packet boundary and the fixed trailing Age and Roll Number fields."
+        "page_content": "## 5.2 Variable-Length Packets\n\nThe Length-Prefixed Identity Packet derives Name length from Name Length. The Delimited Identity Packet derives Name length from the 0x5C terminator. The Header-Footer Bounded Identity Packet derives Name length from the complete packet boundary and the fixed trailing Age and Roll Number fields."
     },
-    "chunk_31": {
-        "id": 31,
+    "chunk_35": {
+        "id": 35,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
             "heading": "5.3 Common Numeric Field Validation",
@@ -278,8 +314,8 @@
         },
         "page_content": "## 5.3 Common Numeric Field Validation\n\nFor all four packet types, Age and Roll Number shall each be exactly one byte and shall be interpreted as unsigned 8-bit integers with valid values from 0 through 255."
     },
-    "chunk_32": {
-        "id": 32,
+    "chunk_36": {
+        "id": 36,
         "metadata": {
             "source": "D:/haard/codes/agentic_rag/agentic_packet_analyzer/sample_docs/sample_6.docx",
             "heading": "6. DOCUMENT NOTES",
