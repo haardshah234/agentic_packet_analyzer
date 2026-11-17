@@ -8,6 +8,7 @@ from retriever.file_opener import fetch_irs
 from chunker.chunk_document import chunk_docx
 from chunker.chunks_to_json import jsonify_doc
 from retriever.packet_extractor import extract_packets
+from packet_analyzer.packet_analyzer_hub import analyze_packets
 from result_generators.save_to_jsons import save_packets_as_json
 from result_generators.clean_json_generator import generate_clean_packets
 
@@ -37,7 +38,7 @@ def main():
     generate_clean_packets()
 
     # TODO: Find Packet patterns in clean packets for analysis. Code in packet_analyzer folder.
-
+    analyze_packets()
 
 
 if __name__ == "__main__":
