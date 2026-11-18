@@ -4,6 +4,8 @@ from packet_analyzer.fetch_clean_packets import fetch_clean_packets
 from packet_analyzer.fetch_expected_header import fetch_expected_header
 from packet_analyzer.fetch_expected_footer import fetch_expected_footer
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
+from packet_analyzer.determine_searching_strategy import determine_searching_strategy
+from packet_analyzer.call_correct_searching_strategy import call_correct_searching_strategy
 
 @time_log
 def analyze_packets():
@@ -39,7 +41,11 @@ def analyze_packets():
         for payload in fetch_payloads(clean_packet_generator):
             print(payload)
     #  Determine searching strategy
-    #  Use searching strategy and save results. 
+        searching_strategy = determine_searching_strategy(defin)
+        print(searching_strategy)
+    #  Implement respective searching strategy
+        call_correct_searching_strategy(searching_strategy)
+    #  Save results. 
     pass
 
 if __name__ == "__main__":
