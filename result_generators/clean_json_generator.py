@@ -6,6 +6,7 @@ import json
 import sys
 
 project_root = Path(__file__).parent.parent
+clean_packets_relative_path = "jsons/clean_packets.json"
 
 def read_packets(file_path):
     with open(file_path, "rb") as file:
@@ -49,6 +50,6 @@ def generate_clean_packets():
             continue
         clean_packets.append(clean_packet)
 
-    with open(project_root/"jsons/clean_packets.json","w", encoding="utf-8") as file:
+    with open(project_root/clean_packets_relative_path,"w", encoding="utf-8") as file:
         json.dump(clean_packets, file, indent=5)
     print("\x1b[38;2;0;256;0mSaved.\x1b[0m")

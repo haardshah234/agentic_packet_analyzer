@@ -77,7 +77,7 @@
             "assumptions": []
         },
         {
-            "name": "LP-Exclusive Packet (Length excludes prefix)",
+            "name": "LP-Exclusive Packet (Length prefix excludes prefix)",
             "from_subsystem": null,
             "to_subsystem": null,
             "reference_section": "3.2",
@@ -166,7 +166,7 @@
             "assumptions": []
         },
         {
-            "name": "LP-Exclusive Packet (Length includes prefix)",
+            "name": "LP-Exclusive Packet (Length prefix includes prefix)",
             "from_subsystem": null,
             "to_subsystem": null,
             "reference_section": "3.3",
@@ -417,7 +417,9 @@
                     "delimiter": null
                 }
             ],
-            "assumptions": []
+            "assumptions": [
+                "Field order is Header, Name, Age, Roll Number, Footer as implied by validation rules."
+            ]
         }
     ]
 }
