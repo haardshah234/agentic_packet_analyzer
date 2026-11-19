@@ -1,4 +1,5 @@
 from logger.time_logger import time_log
+from logger.colors import *
 
 def search_fixed_field(field,payload):
     fixed_value:str = field["fixed_value"]
@@ -24,9 +25,10 @@ def search_fixed_field(field,payload):
 def implement_searching_strategy(searching_strategy,field,payload):
     field_name = field["field_name"]
     size = field["size_in_bytes"]
+    print(f"Field name: {field_name} | Size = {size} | Strategy = {searching_strategy}")
     if size:
         size_in_hex = size * 2
-    print("Size =", size, payload)
+    #print("Size =", size, payload)
     if searching_strategy == "fixed":
         print(f"Searching '{field_name}' over a fixed number of bytes...")
         index = search_fixed_field(field, payload)
@@ -39,4 +41,6 @@ def implement_searching_strategy(searching_strategy,field,payload):
             payload = payload[index+size_in_hex:]
             print(f"Snippet = {snippet_hex} = {snippet},\nSnipped payload = {payload} = {bytes.fromhex(payload).decode('latin-1')}")
             return True, f"{payload}"
+    if searching_strategy == "length_prefix":
+        print(f"{orange}Perform Length-prefix analysis here.{reset}")
     return False,payload

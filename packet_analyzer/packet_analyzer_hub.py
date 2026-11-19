@@ -1,3 +1,4 @@
+from logger.colors import *
 from logger.time_logger import time_log
 from packet_analyzer.fetch_payloads import fetch_payloads
 from packet_analyzer.fetch_clean_packets import fetch_clean_packets
@@ -50,9 +51,10 @@ def analyze_packets():
                 results[field["field_name"]] = result
             if not result: continue
         if any(result == False for result in results.values()):
-            print("\x1b[38;2;255;20;0mPacket Analysis Failed.\x1b[0m")
+            print(f"{red}Packet Analysis Failed.{reset}")
+            break
         else:
-            print("\x1b[38;2;20;255;0mFull Packet Found.\x1b[0m")      
+            print(f"{green}Full Packet Found.{reset}")      
     #  Save results. 
     pass
 
