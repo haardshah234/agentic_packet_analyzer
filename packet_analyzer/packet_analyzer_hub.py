@@ -39,8 +39,10 @@ def analyze_packets():
         expected_footer_hex = expected_footer.encode().hex()
         print()
     #  Fetch payloads with yield.
+        payload_number = 0
         for payload in fetch_payloads(clean_packet_generator):
-            print(payload)
+            payload_number += 1
+            print(f"{magenta}{payload_number}) Payload = {payload}{reset}")
             #  For every payload, start searching for every field.
             results = {}
             for field in defin["fields"]:
@@ -49,12 +51,15 @@ def analyze_packets():
                 #  Implement respective searching strategy
                 result,payload = implement_searching_strategy(searching_strategy,field,payload)
                 results[field["field_name"]] = result
-            if not result: continue
-        if any(result == False for result in results.values()):
-            print(f"{red}Packet Analysis Failed.{reset}")
-            break
-        else:
-            print(f"{green}Full Packet Found.{reset}")      
+                if not result: 
+                    print(f"{orange}Field not found in payload.{reset}\n\n")
+                    break
+                else: print(f"{green}Field found in payload.{reset}\n\n")
+            if any(result == False for result in results.values()):
+                print(f"{red}Packet Not found in payload.{reset}")
+                continue
+            else:
+                print(f"{green}Full Packet Found.{reset}")      
     #  Save results. 
     pass
 

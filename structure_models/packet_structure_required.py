@@ -7,16 +7,17 @@ class myPacketField(BaseModel):
 
     size_in_bytes: int | None
     is_variable_length: bool = False
-    
+
+    is_packet_header: bool = False
     fixed_value: str | int | float | None = None
-    equation_for_variable_length: str | None = None
+    #  equation_for_variable_length: str | None = None
 
     #  Boundary detection for variable-length fields:
     boundary_type: Literal["fixed", "length_prefix", "delimiter", "remaining"] = "fixed"
 
     #  For length-prefixed fields:
     length_prefix_bytes: int | None = None
-    length_prefix_endian: Literal["big", "little"] | None = None
+    length_prefix_endian: Literal["big", "little"] = "little"
     length_include_prefix: bool | None = None
 
     #  For delimiter terminated fields:
