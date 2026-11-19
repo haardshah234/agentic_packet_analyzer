@@ -4,9 +4,11 @@ from packet_analyzer.fetch_payloads import fetch_payloads
 from packet_analyzer.fetch_clean_packets import fetch_clean_packets
 from packet_analyzer.fetch_expected_header import fetch_expected_header
 from packet_analyzer.fetch_expected_footer import fetch_expected_footer
+from packet_analyzer.generate_regex import generate_regex_for_full_packet
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
 from packet_analyzer.determine_searching_strategy import determine_searching_strategy
 from packet_analyzer.implement_searching_strategy import implement_searching_strategy
+import re
 
 @time_log
 def analyze_packets():
@@ -18,49 +20,29 @@ def analyze_packets():
     for defin in packet_definitions:
         #  2nd file: Cleaned Wireshark Packets
         clean_packet_generator = fetch_clean_packets()
+        regex = generate_regex_for_full_packet(defin)
         #print (defin)
         print("Current packet definition being analysed:", defin["name"])
 
-        # Header-fetching
-        expected_header:str = fetch_expected_header(defin)
-        if not expected_header:
-            print("This packet doesn't contain a header. Cannot match.")
-            continue
-        print(f"Expected header found: {expected_header} = {expected_header.encode().hex()}")
-        #print(expected_header)
-        expected_header_hex = expected_header.encode().hex()
-
-        # Footer-fetching
-        expected_footer:str = fetch_expected_footer(defin)
-        if not expected_footer:
-            print("Packet doesn't contain a footer, cannot match.")
-            continue
-        print(f"Expected footer found: {expected_footer} = {expected_footer.encode().hex()}")
-        expected_footer_hex = expected_footer.encode().hex()
-        print()
-    #  Fetch payloads with yield.
+        contains_lp = any(field["boundary_type"] == "length_prefix" for field in defin["fields"])
+        print(f"{defin["name"]} contains lp: {contains_lp}")
+        #  Fetch payloads with yield.
         payload_number = 0
         for payload in fetch_payloads(clean_packet_generator):
             payload_number += 1
             print(f"{magenta}{payload_number}) Payload = {payload}{reset}")
-            #  For every payload, start searching for every field.
-            results = {}
-            for field in defin["fields"]:
-                searching_strategy = determine_searching_strategy(field)
-                #print(searching_strategy)
-                #  Implement respective searching strategy
-                result,payload = implement_searching_strategy(searching_strategy,field,payload)
-                results[field["field_name"]] = result
-                if not result: 
-                    print(f"{orange}Field not found in payload.{reset}\n\n")
-                    break
-                else: print(f"{green}Field found in payload.{reset}\n\n")
-            if any(result == False for result in results.values()):
-                print(f"{red}Packet Not found in payload.{reset}")
-                continue
+            if contains_lp:
+                if re.search(regex,payload):
+                    index = re.search(regex,payload).end()
+                    print("Sixe of lp = ", payload[index])
+                else:
+                    print("Packet wasn't found")
+                    continue
+            if re.search(regex, payload):
+                print(f"{green}Packet found.{reset}")
             else:
-                print(f"{green}Full Packet Found.{reset}")      
-    #  Save results. 
+                print(f"{red}Packet wasn't found.{reset}")
+            #  For every payload, start searching for every field.
     pass
 
 if __name__ == "__main__":

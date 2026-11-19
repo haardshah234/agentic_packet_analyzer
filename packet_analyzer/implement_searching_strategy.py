@@ -23,9 +23,6 @@ def search_fixed_field(field,payload):
 
 def search_length_prefixed_field(field, payload):
     field_boundary_type = field["boundary_type"]
-    
-
-    
 
 def implement_searching_strategy(searching_strategy,field,payload):
     field_name = field["field_name"]
