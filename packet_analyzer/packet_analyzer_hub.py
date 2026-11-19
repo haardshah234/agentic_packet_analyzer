@@ -5,7 +5,7 @@ from packet_analyzer.fetch_expected_header import fetch_expected_header
 from packet_analyzer.fetch_expected_footer import fetch_expected_footer
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
 from packet_analyzer.determine_searching_strategy import determine_searching_strategy
-from packet_analyzer.call_correct_searching_strategy import call_correct_searching_strategy
+from packet_analyzer.implement_searching_strategy import implement_searching_strategy
 
 @time_log
 def analyze_packets():
@@ -40,11 +40,19 @@ def analyze_packets():
     #  Fetch payloads with yield.
         for payload in fetch_payloads(clean_packet_generator):
             print(payload)
-    #  Determine searching strategy
-        searching_strategy = determine_searching_strategy(defin)
-        print(searching_strategy)
-    #  Implement respective searching strategy
-        call_correct_searching_strategy(searching_strategy)
+            #  For every payload, start searching for every field.
+            results = {}
+            for field in defin["fields"]:
+                searching_strategy = determine_searching_strategy(field)
+                #print(searching_strategy)
+                #  Implement respective searching strategy
+                result,payload = implement_searching_strategy(searching_strategy,field,payload)
+                results[field["field_name"]] = result
+            if not result: continue
+        if any(result == False for result in results.values()):
+            print("\x1b[38;2;255;20;0mPacket Analysis Failed.\x1b[0m")
+        else:
+            print("\x1b[38;2;20;255;0mFull Packet Found.\x1b[0m")      
     #  Save results. 
     pass
 
