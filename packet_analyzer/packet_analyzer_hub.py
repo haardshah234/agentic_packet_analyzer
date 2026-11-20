@@ -24,24 +24,36 @@ def analyze_packets():
         #print (defin)
         print("Current packet definition being analysed:", defin["name"])
 
-        contains_lp = any(field["boundary_type"] == "length_prefix" for field in defin["fields"])
+        contains_lp = sum(field["boundary_type"] == "length_prefix" for field in defin["fields"])
         print(f"{defin["name"]} contains lp: {contains_lp}")
+        #print("REGEX =",regex)
         #  Fetch payloads with yield.
+        regex_copy = regex
         payload_number = 0
         for payload in fetch_payloads(clean_packet_generator):
             payload_number += 1
             print(f"{magenta}{payload_number}) Payload = {payload}{reset}")
             if contains_lp:
+                # for i in range(contains_lp):
                 if re.search(regex,payload):
+                    lp_size_in_hex = int(regex[-2])
+                    print("Size of LP:",lp_size_in_hex)
                     index = re.search(regex,payload).end()
-                    print("Sixe of lp = ", payload[index])
+                    value = payload[index-lp_size_in_hex:index]
+                    value_in_bytes = int(value,16)
+                    print("Value of lp = 0x", value, " = ",value_in_bytes, sep="")
+                    print("Regex before variable field:",regex)
+                    regex = generate_regex_for_full_packet(defin,value_in_bytes)
+                    print("Regex after variable field:",regex)
                 else:
-                    print("Packet wasn't found")
+                    print("REG EX=",regex)
+                    print("Partial Packet wasn't found")
                     continue
             if re.search(regex, payload):
                 print(f"{green}Packet found.{reset}")
             else:
                 print(f"{red}Packet wasn't found.{reset}")
+                regex = regex_copy
             #  For every payload, start searching for every field.
     pass
 

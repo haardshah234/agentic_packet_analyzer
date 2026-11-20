@@ -168,7 +168,7 @@
             ]
         },
         {
-            "name": "LP-Exclusive Packet (Length includes prefix)",
+            "name": "LP-Inclusive Packet (Length includes prefix)",
             "from_subsystem": null,
             "to_subsystem": null,
             "reference_section": "3.3",

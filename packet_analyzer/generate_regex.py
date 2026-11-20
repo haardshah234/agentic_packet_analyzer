@@ -1,4 +1,4 @@
-def generate_regex_for_full_packet(packet_definition):
+def generate_regex_for_full_packet(packet_definition, variable_field_size_in_bytes=None) -> str:
     #print(packet_definition)
     regex = ""
     if not packet_definition["contains_variable_lengthed_fields"]:
@@ -25,12 +25,16 @@ def generate_regex_for_full_packet(packet_definition):
                 else:
                     regex += f"[0-9A-Fa-f]{{{size_in_hex}}}"
             if field["boundary_type"] == "length_prefix":
-                current_field_index = packet_definition["fields"].index(field)
-                print("I am the variable field at index", current_field_index)
-                previous_field = packet_definition["fields"][current_field_index - 1]
-                print(previous_field)
-                print("Regex rn =",regex)
-                return regex
+                # current_field_index = packet_definition["fields"].index(field)
+                # print("I am the variable field at index", current_field_index)
+                # previous_field = packet_definition["fields"][current_field_index - 1]
+                # print(previous_field)
+                if variable_field_size_in_bytes:
+                    variable_field_size_in_hex = variable_field_size_in_bytes * 2
+                    regex += f"[0-9A-Fa-f]{{{variable_field_size_in_hex}}}"
+                else:
+                    print("Regex rn =",regex)
+                    return regex
         print(regex)
         return regex
         #  Case 2: Delimiter
