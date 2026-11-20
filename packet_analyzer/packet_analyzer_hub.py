@@ -7,7 +7,8 @@ from packet_analyzer.generate_regex import generate_regex_for_full_packet
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
 
 @time_log
-def analyze_packets():
+def analyze_packets(only_one=False):
+    only_one = True
     #  Open 2 files
     #  1st file: Paacket Definitions
     packet_definitions = fetch_packet_definitions()
@@ -50,6 +51,8 @@ def analyze_packets():
                     continue
             if re.search(regex, payload):
                 print(f"{green}Packet found.{reset}")
+                if only_one:
+                    break
             else:
                 print(f"{red}Packet wasn't found.{reset}")
                 #regex = regex_copy
