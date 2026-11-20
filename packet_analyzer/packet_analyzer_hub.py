@@ -1,14 +1,10 @@
+import re
 from logger.colors import *
 from logger.time_logger import time_log
 from packet_analyzer.fetch_payloads import fetch_payloads
 from packet_analyzer.fetch_clean_packets import fetch_clean_packets
-from packet_analyzer.fetch_expected_header import fetch_expected_header
-from packet_analyzer.fetch_expected_footer import fetch_expected_footer
 from packet_analyzer.generate_regex import generate_regex_for_full_packet
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
-from packet_analyzer.determine_searching_strategy import determine_searching_strategy
-from packet_analyzer.implement_searching_strategy import implement_searching_strategy
-import re
 
 @time_log
 def analyze_packets():
