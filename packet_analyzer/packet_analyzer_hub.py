@@ -39,7 +39,7 @@ def analyze_packets():
                 if re.search(regex,payload):
 
                     print(regex)
-                    lp_size_in_hex = int(regex[-2])
+                    lp_size_in_hex = int(re.findall(r"\{(\d+)\}", regex)[-1])
                     print("Size of LP:",lp_size_in_hex)
                     index = re.search(regex,payload).end()
                     value = payload[index-lp_size_in_hex:index]

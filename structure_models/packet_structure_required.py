@@ -101,6 +101,20 @@ class myPacket(BaseModel):
 
         return self
 
+    @model_validator(mode="after")
+    def validate_remaining_boundary_count(self):
+
+        remaining_fields = [
+            field for field in self.fields
+            if field.boundary_type == "remaining"
+        ]
+
+        if len(remaining_fields) > 1:
+            raise ValueError(
+                "A packet cannot contain more than one field with boundary_type 'remaining'."
+            )
+
+        return self
 
 class PacketCollection(BaseModel):
     packets: list[myPacket]

@@ -41,6 +41,8 @@ def generate_regex_for_full_packet(packet_definition, variable_field_size_in_byt
                 delimiter = field["delimiter"]
                 regex += r"[0-9A-Fa-f]+"
             
+            #  Case 3: Remaining
+            if field["boundary_type"] == "remaining":
+                regex += r"[0-9A-Fa-f]+"
         print("This Regex", regex)
         return regex
-        #  Case 3: Remaining
