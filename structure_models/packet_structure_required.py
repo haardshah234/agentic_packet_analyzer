@@ -74,6 +74,33 @@ class myPacket(BaseModel):
 
         return self
 
+    @model_validator(mode="after")
+    def validate_delimiter_field(self):
+
+        for i, field in enumerate(self.fields):
+
+            if field.boundary_type == "delimiter":
+
+                # Ensure a next field exists
+                if i + 1 >= len(self.fields):
+                    raise ValueError(
+                        f"Field '{field.field_name}' uses delimiter boundary, "
+                        "but no subsequent delimiter field exists."
+                    )
+
+                next_field = self.fields[i + 1]
+
+                # Check if the next field's fixed_value matches the delimiter
+                if next_field.fixed_value != field.delimiter:
+                    raise ValueError(
+                        f"Field '{field.field_name}' specifies delimiter "
+                        f"'{field.delimiter}', but the next field "
+                        f"'{next_field.field_name}' has fixed_value "
+                        f"'{next_field.fixed_value}'."
+                    )
+
+        return self
+
 
 class PacketCollection(BaseModel):
     packets: list[myPacket]

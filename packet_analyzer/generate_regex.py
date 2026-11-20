@@ -25,17 +25,22 @@ def generate_regex_for_full_packet(packet_definition, variable_field_size_in_byt
                 else:
                     regex += f"[0-9A-Fa-f]{{{size_in_hex}}}"
             if field["boundary_type"] == "length_prefix":
-                # current_field_index = packet_definition["fields"].index(field)
-                # print("I am the variable field at index", current_field_index)
-                # previous_field = packet_definition["fields"][current_field_index - 1]
-                # print(previous_field)
                 if variable_field_size_in_bytes:
+                    prefix_size_in_bytes = field["length_prefix_bytes"]
+                    include_prefix = field["length_include_prefix"]
+                    if include_prefix:
+                        print("Subtracting the size of prefix length...")
+                        variable_field_size_in_bytes = variable_field_size_in_bytes - prefix_size_in_bytes
                     variable_field_size_in_hex = variable_field_size_in_bytes * 2
                     regex += f"[0-9A-Fa-f]{{{variable_field_size_in_hex}}}"
                 else:
                     print("Regex rn =",regex)
                     return regex
-        print(regex)
+            #  Case 2: Delimiter
+            if field["boundary_type"] == "delimiter":
+                delimiter = field["delimiter"]
+                regex += r"[0-9A-Fa-f]+"
+            
+        print("This Regex", regex)
         return regex
-        #  Case 2: Delimiter
         #  Case 3: Remaining

@@ -32,19 +32,22 @@ def analyze_packets():
         payload_number = 0
         for payload in fetch_payloads(clean_packet_generator):
             payload_number += 1
-            print(f"{magenta}{payload_number}) Payload = {payload}{reset}")
+            print(f"{pink}{payload_number}) Payload = {payload}{reset}")
             if contains_lp:
                 # for i in range(contains_lp):
+                regex = regex_copy
                 if re.search(regex,payload):
+
+                    print(regex)
                     lp_size_in_hex = int(regex[-2])
                     print("Size of LP:",lp_size_in_hex)
                     index = re.search(regex,payload).end()
                     value = payload[index-lp_size_in_hex:index]
                     value_in_bytes = int(value,16)
                     print("Value of lp = 0x", value, " = ",value_in_bytes, sep="")
-                    print("Regex before variable field:",regex)
+                    #print("Regex before variable field:",regex)
                     regex = generate_regex_for_full_packet(defin,value_in_bytes)
-                    print("Regex after variable field:",regex)
+                    #print("Regex after variable field:",regex)
                 else:
                     print("REG EX=",regex)
                     print("Partial Packet wasn't found")
@@ -53,7 +56,7 @@ def analyze_packets():
                 print(f"{green}Packet found.{reset}")
             else:
                 print(f"{red}Packet wasn't found.{reset}")
-                regex = regex_copy
+                #regex = regex_copy
             #  For every payload, start searching for every field.
     pass
 
