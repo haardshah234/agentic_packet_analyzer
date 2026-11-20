@@ -1,21 +1,23 @@
 import re
 from logger.colors import *
 from logger.time_logger import time_log
-from packet_analyzer.fetch_payloads import fetch_payloads
+from packet_analyzer.fetch_payloads import clean_payload
+from packet_analyzer.extract_each_field import extract_each_field
 from packet_analyzer.fetch_clean_packets import fetch_clean_packets
 from packet_analyzer.generate_regex import generate_regex_for_full_packet
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
 
 @time_log
-def analyze_packets(only_one=False):
-    only_one = True
+def analyze_packets(stop_after_first_match=False):
+    stop_after_first_match = True
     #  Open 2 files
-    #  1st file: Paacket Definitions
+    #  1st file: Packet Definitions
     packet_definitions = fetch_packet_definitions()
 
     #  Fetch packet definition information and expected headers, footers
     for defin in packet_definitions:
         #  2nd file: Cleaned Wireshark Packets
+        matches = []
         clean_packet_generator = fetch_clean_packets()
         regex = generate_regex_for_full_packet(defin)
         #print (defin)
@@ -27,7 +29,9 @@ def analyze_packets(only_one=False):
         #  Fetch payloads with yield.
         regex_copy = regex
         payload_number = 0
-        for payload in fetch_payloads(clean_packet_generator):
+        for clean_packet in clean_packet_generator:
+            unclean_payload = clean_packet["tcp.payload"]
+            payload = clean_payload(unclean_payload)
             payload_number += 1
             print(f"{pink}{payload_number}) Payload = {payload}{reset}")
             if contains_lp:
@@ -50,13 +54,16 @@ def analyze_packets(only_one=False):
                     print("Partial Packet wasn't found")
                     continue
             if re.search(regex, payload):
+                matches.append(clean_packet["frame.number"])
+                extract_each_field(regex, payload, defin)
                 print(f"{green}Packet found.{reset}")
-                if only_one:
+                if stop_after_first_match:
                     break
             else:
                 print(f"{red}Packet wasn't found.{reset}")
                 #regex = regex_copy
             #  For every payload, start searching for every field.
+        print("Found in frame numbers:", matches)
     pass
 
 if __name__ == "__main__":

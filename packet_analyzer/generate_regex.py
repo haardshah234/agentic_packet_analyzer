@@ -8,9 +8,9 @@ def generate_regex_for_full_packet(packet_definition, variable_field_size_in_byt
                 size_in_hex = size*2
                 fixed_value:str = field["fixed_value"]
                 if field["fixed_value"]:
-                    regex += fixed_value.encode().hex()
+                    regex += f"({fixed_value.encode().hex()})"
                 else:
-                    regex += f"[0-9A-Fa-f]{{{size_in_hex}}}"
+                    regex += f"([0-9A-Fa-f]{{{size_in_hex}}})"
         print(regex)
         return regex
     else:
@@ -21,9 +21,9 @@ def generate_regex_for_full_packet(packet_definition, variable_field_size_in_byt
                 size_in_hex = size*2
                 fixed_value:str = field["fixed_value"]
                 if field["fixed_value"]:
-                    regex += fixed_value.encode().hex()
+                    regex += f"({fixed_value.encode().hex()})"
                 else:
-                    regex += f"[0-9A-Fa-f]{{{size_in_hex}}}"
+                    regex += f"([0-9A-Fa-f]{{{size_in_hex}}})"
             if field["boundary_type"] == "length_prefix":
                 if variable_field_size_in_bytes:
                     prefix_size_in_bytes = field["length_prefix_bytes"]
@@ -32,17 +32,17 @@ def generate_regex_for_full_packet(packet_definition, variable_field_size_in_byt
                         print("Subtracting the size of prefix length...")
                         variable_field_size_in_bytes = variable_field_size_in_bytes - prefix_size_in_bytes
                     variable_field_size_in_hex = variable_field_size_in_bytes * 2
-                    regex += f"[0-9A-Fa-f]{{{variable_field_size_in_hex}}}"
+                    regex += f"([0-9A-Fa-f]{{{variable_field_size_in_hex}}})"
                 else:
                     print("Regex rn =",regex)
                     return regex
             #  Case 2: Delimiter
             if field["boundary_type"] == "delimiter":
                 delimiter = field["delimiter"]
-                regex += r"[0-9A-Fa-f]+"
+                regex += r"([0-9A-Fa-f]+)"
             
             #  Case 3: Remaining
             if field["boundary_type"] == "remaining":
-                regex += r"[0-9A-Fa-f]+"
+                regex += r"([0-9A-Fa-f]+)"
         print("This Regex", regex)
         return regex
