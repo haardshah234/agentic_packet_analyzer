@@ -1,8 +1,10 @@
 from logger.colors import *
 from logger.time_logger import time_log
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
-from packet_analyzer.match_packets_using_regex import match_packets_using_regex_and_extract_fields
+from packet_analyzer.validate_testcase_datatypes import validate_testcases_datatypes
 from testcase_web_interface.server import start_server, wait_for_testcase_submission
+from packet_analyzer.match_packets_using_regex import match_packets_using_regex_and_extract_fields
+
 @time_log
 def analyze_packets(stop_after_first_match=False):
     #stop_after_first_match = True
@@ -16,6 +18,7 @@ def analyze_packets(stop_after_first_match=False):
     
     print(coral,expected_fields,reset)
     #  Compare and validate
+    validate_testcases_datatypes(expected_fields, packet_definitions)
     if not expected_fields:
         print("Testcases not found. Nothing to match against.")
         return

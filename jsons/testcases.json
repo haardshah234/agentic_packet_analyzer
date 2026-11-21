@@ -8,7 +8,7 @@
     },
     "LP-Exclusive Packet (Length excludes prefix)": {
         "Header": "HEADER",
-        "Name Length": 10,
+        "Name Length": "10/",
         "Name": "Haard Shah",
         "Age": 22,
         "Roll Number": 43,

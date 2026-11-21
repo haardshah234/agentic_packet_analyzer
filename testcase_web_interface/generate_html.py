@@ -210,7 +210,7 @@ def generate_html(packet_definitions: list[dict]) -> str:
             
             <form id="testcase-form">
 
-                <button type="submit" id="run-button">
+                <button type="submit" id="run-button" autofocus>
                     Run Testcase
                 </button>
 
