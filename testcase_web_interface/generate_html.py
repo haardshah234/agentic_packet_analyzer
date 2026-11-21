@@ -195,7 +195,7 @@ def generate_html(packet_definitions: list[dict]) -> str:
 
             #status {{
                 text-align: center;
-                margin-top: 12px;
+                margin-bottom: 12px;
                 font-weight: bold;
             }}
 
@@ -207,20 +207,20 @@ def generate_html(packet_definitions: list[dict]) -> str:
         <div class="container">
 
             <h1>Packet Testcase Configuration</h1>
-
+            
             <form id="testcase-form">
 
                 <button type="submit" id="run-button">
                     Run Testcase
                 </button>
 
+                <div id="status"></div>
+
                 {packet_tables}
 
                 
 
             </form>
-
-            <div id="status"></div>
 
         </div>
 
@@ -280,7 +280,7 @@ def generate_html(packet_definitions: list[dict]) -> str:
                         throw new Error(result.message);
                     }}
 
-                    status.textContent = "Testcases saved successfully! Closing tab...";
+                    status.textContent = "Testcases saved successfully! You can close the tab now if it doesn't close automatically...";
                     window.close();
 
                 }}
