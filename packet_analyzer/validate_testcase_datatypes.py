@@ -15,8 +15,15 @@ def validate_testcases_datatypes(testcases,packet_definitions):
                 elif data_type_str == "float":
                     data_type = float
                 testcase_value = current_testcase[field_name]
-                assert isinstance(testcase_value,data_type) == True, f"Packet: {packet_name}, Field: {field_name}, Value: {testcase_value}"
+                testcase_type = type(testcase_value)
+                if testcase_type == str:
+                    testcase_type_str = "str"
+                elif testcase_type == int:
+                    testcase_type_str == "int"
+                elif testcase_type == float:
+                    testcase_type_str == "float"
+                assert isinstance(testcase_value,data_type) == True, f"Packet: {packet_name} | Field: {field_name} | Value: {testcase_value}. Expected: {data_type_str}, got: {testcase_type_str}"
                 
     except AssertionError as e:
         print(f"\n{red}You have provided the following testcase with the wrong datatype:{reset}")
-        print(f"{orange}{e}{reset}")
+        print(f"{red}{e}{reset}")
