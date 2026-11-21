@@ -371,19 +371,6 @@
                     "delimiter": null
                 },
                 {
-                    "field_name": "Name",
-                    "data_type": "str",
-                    "size_in_bytes": null,
-                    "is_variable_length": true,
-                    "is_packet_header": false,
-                    "fixed_value": null,
-                    "boundary_type": "remaining",
-                    "length_prefix_bytes": null,
-                    "length_prefix_endian": "little",
-                    "length_include_prefix": null,
-                    "delimiter": null
-                },
-                {
                     "field_name": "Age",
                     "data_type": "int",
                     "size_in_bytes": 1,
@@ -404,6 +391,19 @@
                     "is_packet_header": false,
                     "fixed_value": null,
                     "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "remaining",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
                     "length_include_prefix": null,

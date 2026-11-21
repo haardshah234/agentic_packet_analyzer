@@ -1,0 +1,40 @@
+{
+    "Fixed Name Packet": {
+        "Header": "HEADER",
+        "Name": "Haard ShahHaard Shah",
+        "Age": 22,
+        "Roll Number": 43,
+        "Footer": "FOOTER"
+    },
+    "LP-Exclusive Packet (Length excludes prefix)": {
+        "Header": "HEADER",
+        "Name Length": 10,
+        "Name": "Haard Shah",
+        "Age": 22,
+        "Roll Number": 43,
+        "Footer": "FOOTER"
+    },
+    "LP-Inclusive Packet (Length includes prefix)": {
+        "Header": "HEADER",
+        "Name Length": 11,
+        "Name": "Haard Shah",
+        "Age": 22,
+        "Roll Number": 43,
+        "Footer": "FOOTER"
+    },
+    "Delimited Identity Packet": {
+        "Header": "HEADER",
+        "Age": 22,
+        "Name": "Haard Shah",
+        "Name Terminator": "\\",
+        "Roll Number": 43,
+        "Footer": "FOOTER"
+    },
+    "Header-Footer Bounded Identity Packet": {
+        "Header": "HEADER",
+        "Age": 22,
+        "Roll Number": 43,
+        "Name": "Haard Shah from Hyderabad",
+        "Footer": "FOOTER"
+    }
+}
