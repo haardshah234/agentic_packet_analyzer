@@ -9,7 +9,7 @@ from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
 
 @time_log
 def analyze_packets(stop_after_first_match=False):
-    stop_after_first_match = True
+    #stop_after_first_match = True
     #  Open 2 files
     #  1st file: Packet Definitions
     packet_definitions = fetch_packet_definitions()
@@ -53,18 +53,19 @@ def analyze_packets(stop_after_first_match=False):
                     print("REG EX=",regex)
                     print("Partial Packet wasn't found")
                     continue
-            if re.search(regex, payload):
-                matches.append(clean_packet["frame.number"])
-                extract_each_field(regex, payload, defin)
-                print(f"{green}Packet found.{reset}")
-                if stop_after_first_match:
-                    break
-            else:
+            match = re.search(regex,payload)
+            if not match:
                 print(f"{red}Packet wasn't found.{reset}")
+                continue
+
+            matches.append(clean_packet["frame.number"])
+            print(f"{green}Packet found.\nDetected fields:{reset}")
+            extract_each_field(match, defin)
+            if stop_after_first_match:
+                break
                 #regex = regex_copy
             #  For every payload, start searching for every field.
         print("Found in frame numbers:", matches)
-    pass
 
 if __name__ == "__main__":
     analyze_packets()

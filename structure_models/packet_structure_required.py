@@ -102,17 +102,20 @@ class myPacket(BaseModel):
         return self
 
     @model_validator(mode="after")
-    def validate_remaining_boundary_count(self):
+    def validate_fields_after_remaining(self):
 
-        remaining_fields = [
-            field for field in self.fields
-            if field.boundary_type == "remaining"
-        ]
+        for i, field in enumerate(self.fields):
 
-        if len(remaining_fields) > 1:
-            raise ValueError(
-                "A packet cannot contain more than one field with boundary_type 'remaining'."
-            )
+            if field.boundary_type == "remaining":
+
+                for subsequent_field in self.fields[i + 1:]:
+
+                    if subsequent_field.fixed_value is None:
+                        raise ValueError(
+                            f"Field '{subsequent_field.field_name}' comes after "
+                            f"field '{field.field_name}' with boundary_type "
+                            "'remaining', but does not have a fixed_value."
+                        )
 
         return self
 
