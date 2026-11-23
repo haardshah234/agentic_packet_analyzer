@@ -12,9 +12,11 @@ def match_packets_using_regex_and_extract_fields(packet_definitions,stop_after_f
     for defin in packet_definitions:
             #  2nd file: Cleaned Wireshark Packets
             matches = []
+            current_packet_name = defin["name"]
+            metadata[current_packet_name] = []
+            extracted_fields[current_packet_name] = []
             clean_packet_generator = fetch_clean_packets()
             regex = generate_regex_for_full_packet(defin)
-            current_packet_name = defin["name"]
             print("Current packet definition being analysed:", current_packet_name)
 
             contains_lp = sum(field["boundary_type"] == "length_prefix" for field in defin["fields"])
@@ -53,11 +55,17 @@ def match_packets_using_regex_and_extract_fields(packet_definitions,stop_after_f
                     print(f"{red}Packet wasn't found.{reset}")
                     continue
 
-                matches.append({key:val for key,val in clean_packet.items() if (key!="tcp.payload" and key!="tcp.flags_tree")})
+                frame_metadata = {
+                    key: val for key, val in clean_packet.items()
+                    if key not in ("tcp.payload", "tcp.flags_tree")
+                }
+
+                metadata[defin["name"]].append(frame_metadata)
                 print(f"{green}Packet found.\nDetected fields:{reset}")
                 field_wise_extraction = extract_each_field(match, defin)
-                extracted_fields[defin["name"]] = field_wise_extraction
-                metadata[defin["name"]] = matches
+                extracted_fields.setdefault(defin["name"], []).append(field_wise_extraction)
+                #extracted_fields[defin["name"]].append(field_wise_extraction)
+                
                 print(lavender, field_wise_extraction, reset)
                 
                 if stop_after_first_match:

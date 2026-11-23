@@ -14,23 +14,58 @@ def _escape(value):
     return html.escape(str(value))
 
 
-def _generate_field_table(packet_name, expected_fields, extracted_fields, definition):
-    rows = []
+def _generate_field_table(packet_name, expected_fields, extracted_fields, definition, metadata, results):
+    extractions = extracted_fields.get(packet_name, [])
 
+    if not extractions:
+        return "<p>Packet not found.</p>", 0, 0
+
+    expected_packet_fields = expected_fields.get(packet_name, {})
+    frame_metadata = metadata.get(packet_name, [])
+    packet_results = results.get(packet_name, [])
+
+    # If any extraction passed, display one passing extraction.
+    # Otherwise, display only the extraction with the most matching fields.
+    passing_indices = [
+        index for index, result in enumerate(packet_results) if result
+    ]
+
+    if passing_indices:
+        selected_index = passing_indices[0]
+    else:
+        def match_score(extraction):
+            return sum(
+                field_name in extraction and extraction[field_name] == expected_value
+                for field_name, expected_value in expected_packet_fields.items()
+            )
+
+        selected_index = max(
+            range(len(extractions)),
+            key=lambda index: match_score(extractions[index])
+        )
+
+    extraction = extractions[selected_index]
+    frame_number = (
+        frame_metadata[selected_index].get("frame.number", "Unknown")
+        if selected_index < len(frame_metadata)
+        else "Unknown"
+    )
+
+    rows = []
     passed = 0
     failed = 0
 
     for field in definition.get("fields", []):
         field_name = field["field_name"]
 
-        expected = expected_fields.get(packet_name, {}).get(field_name)
-        observed = extracted_fields.get(packet_name, {}).get(field_name)
+        expected = expected_packet_fields.get(field_name)
+        observed = extraction.get(field_name)
 
         # A missing expected or observed field is considered a failure.
         status = (
             expected == observed
-            and field_name in expected_fields.get(packet_name, {})
-            and field_name in extracted_fields.get(packet_name, {})
+            and field_name in expected_packet_fields
+            and field_name in extraction
         )
 
         if status:
@@ -51,7 +86,14 @@ def _generate_field_table(packet_name, expected_fields, extracted_fields, defini
             </tr>
         """)
 
+    extraction_status = (
+        "PASS"
+        if selected_index < len(packet_results) and packet_results[selected_index]
+        else "FAIL"
+    )
+
     table = f"""
+        <h4>Frame #{_escape(frame_number)} — {extraction_status}</h4>
         <table class="report-table">
             <thead>
                 <tr>
@@ -127,7 +169,7 @@ def _generate_frame_metadata(frames):
     """
 
 
-def generate_report(expected_fields, extracted_fields, packet_definitions, metadata, launch=True):
+def generate_report(expected_fields, extracted_fields, packet_definitions, metadata, results, launch=True):
 
     # ---------------------------------------------------------
     # 1. Generate individual packet sections
@@ -150,7 +192,9 @@ def generate_report(expected_fields, extracted_fields, packet_definitions, metad
             packet_name,
             expected_fields,
             extracted_fields,
-            definition
+            definition,
+            metadata,
+            results
         )
 
         total_fields = passed_fields + failed_fields
@@ -160,15 +204,22 @@ def generate_report(expected_fields, extracted_fields, packet_definitions, metad
             if total_fields else 0
         )
 
-        failed_percentage = 100 - passed_percentage
+        failed_percentage = 100 - passed_percentage if total_fields else 0
 
-        packet_status = "PASS" if failed_fields == 0 else "FAIL"
-        status_class = packet_status.lower()
+        packet_extractions = extracted_fields.get(packet_name, [])
 
-        if packet_status == "PASS":
-            passed_packets += 1
-        else:
+        if not packet_extractions:
+            packet_status = "PACKET NOT FOUND"
+            status_class = "fail"
             failed_packets += 1
+        else:
+            packet_status = "PASS" if failed_fields == 0 else "FAIL"
+            status_class = packet_status.lower()
+
+            if packet_status == "PASS":
+                passed_packets += 1
+            else:
+                failed_packets += 1
 
         # Fetch frame metadata for this packet
         frames = metadata.get(packet_name, [])
