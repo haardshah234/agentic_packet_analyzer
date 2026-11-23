@@ -45,6 +45,7 @@ def _generate_field_table(packet_name, expected_fields, extracted_fields, defini
         )
 
     extraction = extractions[selected_index]
+    selected_metadata = metadata[packet_name][selected_index]
     frame_number = (
         frame_metadata[selected_index].get("frame.number", "Unknown")
         if selected_index < len(frame_metadata)
@@ -109,7 +110,7 @@ def _generate_field_table(packet_name, expected_fields, extracted_fields, defini
         </table>
     """
 
-    return table, passed, failed
+    return table, passed, failed, selected_metadata
 
 
 def _generate_frame_metadata(frames):
@@ -188,7 +189,7 @@ def generate_report(expected_fields, extracted_fields, packet_definitions, metad
         total_packets += 1
 
         # Generate field comparison table
-        field_table, passed_fields, failed_fields = _generate_field_table(
+        field_table, passed_fields, failed_fields, selected_metadata = _generate_field_table(
             packet_name,
             expected_fields,
             extracted_fields,
@@ -222,9 +223,9 @@ def generate_report(expected_fields, extracted_fields, packet_definitions, metad
                 failed_packets += 1
 
         # Fetch frame metadata for this packet
-        frames = metadata.get(packet_name, [])
+        #frames = metadata.get(packet_name, [])
 
-        frame_metadata = _generate_frame_metadata(frames)
+        frame_metadata = _generate_frame_metadata([selected_metadata])
 
         # Additional packet definition information
         reference_section = definition.get("reference_section")
@@ -508,12 +509,38 @@ def generate_report(expected_fields, extracted_fields, packet_definitions, metad
                 margin-top: 25px;
             }}
 
-            .report-table,
-            .metadata-table {{
+            .report-table {{
                 width: 100%;
-                border-collapse: collapse;
+                border-collapse: separate;
                 margin-bottom: 20px;
                 table-layout: auto;
+                border-radius: 10px;
+                overflow: hidden;
+                border-spacing: 0;
+            }}
+
+            .metadata-table {{
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                margin-bottom: 20px;
+                table-layout: auto;
+            }}
+
+            .report-table tr:last-child td:first-child {{
+                border-bottom-left-radius: 10px;
+            }}
+
+            .report-table tr:last-child td:last-child {{
+                border-bottom-right-radius: 10px;
+            }}
+
+            .metadata-table tr:last-child td:first-child {{
+                border-bottom-left-radius: 10px;
+            }}
+
+            .metadata-table tr:last-child td:last-child {{
+                border-bottom-right-radius: 10px;
             }}
 
             .report-table th,

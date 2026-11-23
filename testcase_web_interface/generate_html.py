@@ -95,13 +95,26 @@ def generate_html(packet_definitions: list[dict]) -> str:
 
         <style>
 
+            :root {{
+                --background: #0b1120;
+                --surface: #111827;
+                --surface-secondary: #1f2937;
+                --border: #374151;
+                --text: #f3f4f6;
+                --muted: #9ca3af;
+                --accent: #293548;
+                --green: #22c55e;
+                --red: #ef4444;
+            }}
+
             * {{
                 box-sizing: border-box;
             }}
 
             body {{
                 font-family: Arial, sans-serif;
-                background-color: #f4f6f9;
+                background-color: var(--background);
+                color: var(--text);
                 margin: 0;
                 padding: 12px;
             }}
@@ -109,66 +122,95 @@ def generate_html(packet_definitions: list[dict]) -> str:
             .container {{
                 width: 99%;
                 margin: auto;
-                background: white;
+                background: var(--surface);
                 padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.25);
             }}
 
             h1 {{
                 text-align: center;
-                color: #2d3194;
+                color: var(--text);
                 margin-top: 5px;
                 margin-bottom: 25px;
             }}
 
             .packet-table {{
                 width: 100%;
-                border-collapse: collapse;
+                border-collapse: separate;
+                border-spacing: 0;
                 margin-bottom: 22px;
                 table-layout: fixed;
+                border-radius: 10px;
+                overflow: hidden;
+            }}
+
+            .packet-table tr:first-child td:first-child {{
+                border-top-left-radius: 10px;
+            }}
+
+            .packet-table tr:first-child td:last-child {{
+                border-top-right-radius: 10px;
+            }}
+
+            .packet-table tr:last-child td:first-child {{
+                border-bottom-left-radius: 10px;
+            }}
+
+            .packet-table tr:last-child td:last-child {{
+                border-bottom-right-radius: 10px;
             }}
 
             .packet-table td {{
-                border: 1px solid #d5d5d5;
+                border: 1px solid var(--border);
                 padding: 7px 12px;
                 vertical-align: middle;
+                color: var(--text);
             }}
 
             .packet-heading td {{
-                background-color: #2d3194;
-                color: white;
+                background-color: var(--accent);
+                color: var(--text);
                 font-weight: bold;
                 font-size: 15px;
                 padding: 9px 12px;
             }}
 
-            tbody {{
+            <!--tbody {{
                 border-top-left-radius: 15px;
                 border-top-right-radius: 15px;
-            }}
+            }}-->
 
             .field-name {{
                 width: 35%;
                 font-weight: 500;
-                background-color: #f8f9fc;
+                background-color: var(--surface-secondary);
             }}
 
             .field-input {{
                 width: 65%;
+                background-color: var(--surface);
             }}
 
             .field-input input {{
                 width: 100%;
                 padding: 7px 9px;
-                border: 1px solid #ccc;
+                background-color: var(--surface-secondary);
+                color: var(--text);
+                border: 1px solid var(--border);
                 border-radius: 4px;
                 font-size: 14px;
             }}
 
+            .field-input input::placeholder {{
+                color: var(--muted);
+            }}
+
             .field-input input:focus {{
                 outline: none;
-                border-color: #2d3194;
+                border-color: #64748b;
+                box-shadow: 0 0 0 2px rgba(100,116,139,0.2);
             }}
 
             button {{
@@ -176,20 +218,22 @@ def generate_html(packet_definitions: list[dict]) -> str:
                 width: 100%;
                 margin-bottom: 25px;
                 padding: 12px;
-                background-color: #2d3194;
-                color: white;
-                border: none;
+                background-color: var(--accent);
+                color: var(--text);
+                border: 1px solid var(--border);
                 border-radius: 15px;
                 font-size: 16px;
                 cursor: pointer;
+                transition: background-color 0.2s ease;
             }}
 
             button:hover {{
-                background-color: #202570;
+                background-color: #37465d;
             }}
 
             button:disabled {{
-                background-color: #888;
+                background-color: #374151;
+                color: var(--muted);
                 cursor: not-allowed;
             }}
 
@@ -197,9 +241,11 @@ def generate_html(packet_definitions: list[dict]) -> str:
                 text-align: center;
                 margin-bottom: 12px;
                 font-weight: bold;
+                color: var(--text);
             }}
 
         </style>
+
     </head>
 
     <body>
