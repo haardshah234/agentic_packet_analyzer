@@ -23,6 +23,7 @@ def validate_testcases_datatypes(testcases,packet_definitions):
                 elif testcase_type == float:
                     testcase_type_str == "float"
                 assert isinstance(testcase_value,data_type) == True, f"Packet: {packet_name} | Field: {field_name} | Value: {testcase_value}. Expected: {data_type_str}, got: {testcase_type_str}"
+        print(f"{green}All testcases are of valid datatype!{reset}")
                 
     except AssertionError as e:
         print(f"\n{red}You have provided the following testcase with the wrong datatype:{reset}")

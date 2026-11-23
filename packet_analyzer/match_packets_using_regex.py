@@ -8,6 +8,7 @@ from packet_analyzer.generate_regex import generate_regex_for_full_packet
 
 def match_packets_using_regex_and_extract_fields(packet_definitions,stop_after_first_match):
     extracted_fields = {}
+    metadata = {}
     for defin in packet_definitions:
             #  2nd file: Cleaned Wireshark Packets
             matches = []
@@ -52,15 +53,16 @@ def match_packets_using_regex_and_extract_fields(packet_definitions,stop_after_f
                     print(f"{red}Packet wasn't found.{reset}")
                     continue
 
-                matches.append(clean_packet["frame.number"])
+                matches.append({key:val for key,val in clean_packet.items() if (key!="tcp.payload" and key!="tcp.flags_tree")})
                 print(f"{green}Packet found.\nDetected fields:{reset}")
                 field_wise_extraction = extract_each_field(match, defin)
                 extracted_fields[defin["name"]] = field_wise_extraction
-                print(lavender, field_wise_extraction, reset)
+                metadata[defin["name"]] = matches
+                print(lavender, metadata, reset)
                 
                 if stop_after_first_match:
                     break
                     #regex = regex_copy
             print("Found in frame numbers:", matches)
 
-    return extracted_fields
+    return extracted_fields, metadata
