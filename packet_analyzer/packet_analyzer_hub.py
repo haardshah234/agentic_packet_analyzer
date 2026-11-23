@@ -24,14 +24,14 @@ def analyze_packets(stop_after_first_match=False):
     #  Compare and validate
     validate_testcases_datatypes(expected_fields, packet_definitions)
     results = compare_extracted_and_expected_fields(extracted_fields, expected_fields)#, metadata)
-    print(crimson)
-    #pprint.pp(metadata, indent=4)
-    print(metadata)
-    print(reset)
-    print(electric_blue, packet_definitions, reset)
-    print(emerald,extracted_fields,reset)
-    print(coral,expected_fields,reset)
-    print(f"{gold}{results}{reset}")
+    # print(crimson)
+    # #pprint.pp(metadata, indent=4)
+    # print(metadata)
+    # print(reset)
+    # print(electric_blue, packet_definitions, reset)
+    # print(emerald,extracted_fields,reset)
+    # print(coral,expected_fields,reset)
+    # print(f"{gold}{results}{reset}")
     # Generate Reports
     generate_report(expected_fields,extracted_fields,packet_definitions,metadata, results)
     

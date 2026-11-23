@@ -176,6 +176,9 @@ def generate_report(expected_fields, extracted_fields, packet_definitions, metad
     # 1. Generate individual packet sections
     # ---------------------------------------------------------
 
+    project_code = input("Enter project code: ")
+    tester_name = input("Enter tester's name: ")
+
     packet_sections = []
 
     total_packets = 0
@@ -821,6 +824,20 @@ def generate_report(expected_fields, extracted_fields, packet_definitions, metad
 
                 <div class="report-info">
 
+                    <div class="info-item">
+                        <span class="info-label">Project Code</span>
+                        <span class="info-value">
+                            {_escape(project_code)}
+                        </span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Tested by</span>
+                        <span class="info-value">
+                            {_escape(tester_name)}
+                        </span>
+                    </div>
+                    
                     <div class="info-item">
                         <span class="info-label">Report Generated On</span>
                         <span class="info-value">

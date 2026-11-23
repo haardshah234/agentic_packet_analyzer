@@ -1,32 +1,32 @@
 {
     "Fixed Name Packet": {
-        "Header": "HEADER",
-        "Name": "Haard ShahHaard Shah",
+        "Header": "HEADER1",
+        "Name": "Haard Shah",
         "Age": 22,
         "Roll Number": 43,
-        "Footer": "FOOTER"
+        "Footer": "FOOTER1"
     },
-    "LP-Exclusive Packet (Length excludes prefix)": {
-        "Header": "HEADER",
+    "LP-Exclusive Packet (Header2)": {
+        "Header": "HEADER2",
         "Name Length": 10,
         "Name": "Haard Shah",
         "Age": 22,
         "Roll Number": 43,
-        "Footer": "FOOTER"
+        "Footer": "FOOTER2"
     },
-    "LP-Inclusive Packet (Length includes prefix)": {
-        "Header": "HEADER",
+    "LP-Exclusive Packet (Header3)": {
+        "Header": "HEADER3",
         "Name Length": 11,
         "Name": "Haard Shah",
         "Age": 22,
         "Roll Number": 43,
-        "Footer": "FOOTER"
+        "Footer": "FOOTER3"
     },
     "Delimited Identity Packet": {
         "Header": "HEADER",
         "Age": 22,
         "Name": "Haard Shah",
-        "Name Terminator": "\\",
+        "Name Terminator": "\\|",
         "Roll Number": 43,
         "Footer": "FOOTER"
     },
@@ -36,5 +36,57 @@
         "Roll Number": 43,
         "Name": "Haard Shah from Hyderabad",
         "Footer": "FOOTER"
+    },
+    "Dual LP-Exclusive Packet": {
+        "Header": "HEADER6",
+        "Age": 22,
+        "Name Length": 10,
+        "Name": "Haard Shah",
+        "Preposition": "from",
+        "City Length": 9,
+        "City": "Hyderabad",
+        "Roll Number": 43,
+        "Footer": "FOOTER2"
+    },
+    "LP-Exclusive-Inclusive Packet": {
+        "Header": "HEADER7",
+        "Age": 22,
+        "Name Length": 10,
+        "Name": "Haard Shah",
+        "Preposition": "from",
+        "City Length": 10,
+        "City": "Hyderabad",
+        "Roll Number": 43,
+        "Footer": "FOOTER7"
+    },
+    "LP-Exclusive-Delimiter Packet": {
+        "Header": "HEADER8",
+        "Roll Number": 43,
+        "Name Length": 10,
+        "Name": "Haard Shah",
+        "Preposition": "from",
+        "City": "Hyderabad",
+        "City Delimiter": "|",
+        "Age": 22,
+        "Footer": "FOOTER8"
+    },
+    "Delimiter-Remaining Packet": {
+        "Header": "HEADER9",
+        "Roll Number": 43,
+        "Name": "Haard Shah",
+        "Name Terminator": "|",
+        "Age": 22,
+        "Description": "Hyderabad",
+        "Footer": "FOOTER9"
+    },
+    "Dual-Delimiter Packet": {
+        "Header": "HEADERA",
+        "Roll Number": 43,
+        "Name": "Haard Shah",
+        "Name Terminator": "$|",
+        "Age": 22,
+        "Description": "from Hyderabad",
+        "Description Terminator": "\\",
+        "Footer": "FOOTERA"
     }
 }

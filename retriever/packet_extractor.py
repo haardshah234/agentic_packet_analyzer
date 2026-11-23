@@ -11,7 +11,8 @@ def extract_packets(chunks: list[Document]) -> PacketCollection:
     
     llm = ChatGroq(
         model="openai/gpt-oss-120b",
-        temperature=0
+        temperature=0,
+        max_tokens=8192
     )
 
     structured_llm = llm.with_structured_output(PacketCollection)

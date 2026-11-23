@@ -2,19 +2,19 @@
     "packets": [
         {
             "name": "Fixed Name Packet",
-            "from_subsystem": null,
-            "to_subsystem": null,
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
             "reference_section": "3.1",
-            "total_size_in_bytes": 34,
+            "total_size_in_bytes": 26,
             "contains_variable_lengthed_fields": false,
             "fields": [
                 {
                     "field_name": "Header",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": true,
-                    "fixed_value": "HEADER",
+                    "fixed_value": "HEADER1",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -24,7 +24,7 @@
                 {
                     "field_name": "Name",
                     "data_type": "str",
-                    "size_in_bytes": 20,
+                    "size_in_bytes": 10,
                     "is_variable_length": false,
                     "is_packet_header": false,
                     "fixed_value": null,
@@ -63,10 +63,10 @@
                 {
                     "field_name": "Footer",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": false,
-                    "fixed_value": "FOOTER",
+                    "fixed_value": "FOOTER1",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -77,9 +77,9 @@
             "assumptions": []
         },
         {
-            "name": "LP-Exclusive Packet (Length excludes prefix)",
-            "from_subsystem": null,
-            "to_subsystem": null,
+            "name": "LP-Exclusive Packet (Header2)",
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
             "reference_section": "3.2",
             "total_size_in_bytes": null,
             "contains_variable_lengthed_fields": true,
@@ -87,10 +87,10 @@
                 {
                     "field_name": "Header",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": true,
-                    "fixed_value": "HEADER",
+                    "fixed_value": "HEADER2",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -152,10 +152,10 @@
                 {
                     "field_name": "Footer",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": false,
-                    "fixed_value": "FOOTER",
+                    "fixed_value": "FOOTER2",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -163,14 +163,12 @@
                     "delimiter": null
                 }
             ],
-            "assumptions": [
-                "Name Length field does NOT include the length byte itself."
-            ]
+            "assumptions": []
         },
         {
-            "name": "LP-Inclusive Packet (Length includes prefix)",
-            "from_subsystem": null,
-            "to_subsystem": null,
+            "name": "LP-Exclusive Packet (Header3)",
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
             "reference_section": "3.3",
             "total_size_in_bytes": null,
             "contains_variable_lengthed_fields": true,
@@ -178,10 +176,10 @@
                 {
                     "field_name": "Header",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": true,
-                    "fixed_value": "HEADER",
+                    "fixed_value": "HEADER3",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -243,10 +241,10 @@
                 {
                     "field_name": "Footer",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": false,
-                    "fixed_value": "FOOTER",
+                    "fixed_value": "FOOTER3",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -254,14 +252,12 @@
                     "delimiter": null
                 }
             ],
-            "assumptions": [
-                "Name Length field includes the length byte itself."
-            ]
+            "assumptions": []
         },
         {
             "name": "Delimited Identity Packet",
-            "from_subsystem": null,
-            "to_subsystem": null,
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
             "reference_section": "3.4",
             "total_size_in_bytes": null,
             "contains_variable_lengthed_fields": true,
@@ -269,10 +265,10 @@
                 {
                     "field_name": "Header",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": true,
-                    "fixed_value": "HEADER",
+                    "fixed_value": "HEADER4",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -303,15 +299,15 @@
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
                     "length_include_prefix": null,
-                    "delimiter": "\\"
+                    "delimiter": "\\|"
                 },
                 {
                     "field_name": "Name Terminator",
                     "data_type": "str",
-                    "size_in_bytes": 1,
+                    "size_in_bytes": 2,
                     "is_variable_length": false,
                     "is_packet_header": false,
-                    "fixed_value": "\\",
+                    "fixed_value": "\\|",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -334,10 +330,10 @@
                 {
                     "field_name": "Footer",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": false,
-                    "fixed_value": "FOOTER",
+                    "fixed_value": "FOOTER4",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -345,14 +341,12 @@
                     "delimiter": null
                 }
             ],
-            "assumptions": [
-                "Name terminator byte is 0x5C (ASCII backslash)."
-            ]
+            "assumptions": []
         },
         {
             "name": "Header-Footer Bounded Identity Packet",
-            "from_subsystem": null,
-            "to_subsystem": null,
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
             "reference_section": "3.5",
             "total_size_in_bytes": null,
             "contains_variable_lengthed_fields": true,
@@ -360,10 +354,10 @@
                 {
                     "field_name": "Header",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": true,
-                    "fixed_value": "HEADER",
+                    "fixed_value": "HEADER5",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -412,10 +406,10 @@
                 {
                     "field_name": "Footer",
                     "data_type": "str",
-                    "size_in_bytes": 6,
+                    "size_in_bytes": 7,
                     "is_variable_length": false,
                     "is_packet_header": false,
-                    "fixed_value": "FOOTER",
+                    "fixed_value": "FOOTER5",
                     "boundary_type": "fixed",
                     "length_prefix_bytes": null,
                     "length_prefix_endian": "little",
@@ -423,9 +417,608 @@
                     "delimiter": null
                 }
             ],
-            "assumptions": [
-                "Name occupies all bytes between Header and the two-byte Age/Roll Number sequence that precedes Footer."
-            ]
+            "assumptions": []
+        },
+        {
+            "name": "Dual LP-Exclusive Packet",
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
+            "reference_section": "3.6",
+            "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": true,
+                    "fixed_value": "HEADER6",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Age",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name Length",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 1,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": false,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Preposition",
+                    "data_type": "str",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "from",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "City Length",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "City",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 1,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": false,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Roll Number",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Footer",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "FOOTER2",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "LP-Exclusive-Inclusive Packet",
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
+            "reference_section": "3.7",
+            "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": true,
+                    "fixed_value": "HEADER7",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Age",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name Length",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 1,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": false,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Preposition",
+                    "data_type": "str",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "from",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "City Length",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "City",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 1,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": true,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Roll Number",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Footer",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "FOOTER7",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "LP-Exclusive-Delimiter Packet",
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
+            "reference_section": "3.8",
+            "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": true,
+                    "fixed_value": "HEADER8",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Roll Number",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name Length",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "length_prefix",
+                    "length_prefix_bytes": 1,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": false,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Preposition",
+                    "data_type": "str",
+                    "size_in_bytes": 4,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "from",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "City",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "delimiter",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": "|"
+                },
+                {
+                    "field_name": "City Delimiter",
+                    "data_type": "str",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "|",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Age",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Footer",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "FOOTER8",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Delimiter-Remaining Packet",
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
+            "reference_section": "3.9",
+            "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": true,
+                    "fixed_value": "HEADER9",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Roll Number",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "delimiter",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": "\\"
+                },
+                {
+                    "field_name": "Name Terminator",
+                    "data_type": "str",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "\\",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Age",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Description",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "remaining",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Footer",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "FOOTER9",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
+        },
+        {
+            "name": "Dual-Delimiter Packet",
+            "from_subsystem": "Subsystem A",
+            "to_subsystem": "Subsystem B",
+            "reference_section": "3.10",
+            "total_size_in_bytes": null,
+            "contains_variable_lengthed_fields": true,
+            "fields": [
+                {
+                    "field_name": "Header",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": true,
+                    "fixed_value": "HEADERA",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Roll Number",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Name",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "delimiter",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": "$|"
+                },
+                {
+                    "field_name": "Name Terminator",
+                    "data_type": "str",
+                    "size_in_bytes": 2,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "$|",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Age",
+                    "data_type": "int",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Description",
+                    "data_type": "str",
+                    "size_in_bytes": null,
+                    "is_variable_length": true,
+                    "is_packet_header": false,
+                    "fixed_value": null,
+                    "boundary_type": "delimiter",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": "\\"
+                },
+                {
+                    "field_name": "Description Terminator",
+                    "data_type": "str",
+                    "size_in_bytes": 1,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "\\",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                },
+                {
+                    "field_name": "Footer",
+                    "data_type": "str",
+                    "size_in_bytes": 7,
+                    "is_variable_length": false,
+                    "is_packet_header": false,
+                    "fixed_value": "FOOTERA",
+                    "boundary_type": "fixed",
+                    "length_prefix_bytes": null,
+                    "length_prefix_endian": "little",
+                    "length_include_prefix": null,
+                    "delimiter": null
+                }
+            ],
+            "assumptions": []
         }
     ]
 }
