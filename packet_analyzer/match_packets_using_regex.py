@@ -58,7 +58,7 @@ def match_packets_using_regex_and_extract_fields(packet_definitions,stop_after_f
                 field_wise_extraction = extract_each_field(match, defin)
                 extracted_fields[defin["name"]] = field_wise_extraction
                 metadata[defin["name"]] = matches
-                print(lavender, metadata, reset)
+                print(lavender, field_wise_extraction, reset)
                 
                 if stop_after_first_match:
                     break

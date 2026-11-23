@@ -1,6 +1,6 @@
 from logger.colors import *
 from logger.time_logger import time_log
-#from result_generators.generate_report import generate_report
+from result_generators.generate_report import generate_report
 from packet_analyzer.fetch_packet_definitions import fetch_packet_definitions
 from packet_analyzer.validate_testcase_datatypes import validate_testcases_datatypes
 from testcase_web_interface.server import start_server, wait_for_testcase_submission
@@ -17,7 +17,8 @@ def analyze_packets(stop_after_first_match=False):
     #  Fetch expected field values (Testcases/ITP)            
     expected_fields = wait_for_testcase_submission(server,testcase_queue)
     extracted_fields,metadata = match_packets_using_regex_and_extract_fields(packet_definitions,stop_after_first_match)
-
+    print(lavender, metadata, reset)
+    print(electric_blue, packet_definitions, reset)
     print(emerald,extracted_fields,reset)
     print(coral,expected_fields,reset)
     if not expected_fields:
@@ -27,7 +28,7 @@ def analyze_packets(stop_after_first_match=False):
     validate_testcases_datatypes(expected_fields, packet_definitions)
     results = compare_extracted_and_expected_fields(extracted_fields, expected_fields)
     # Generate Reports
-    #generate_report(expected_fields,extracted_fields)
+    generate_report(expected_fields,extracted_fields,packet_definitions,metadata)
 
     print(f"{gold}{results}{reset}")
     
